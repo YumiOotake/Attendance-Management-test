@@ -16,6 +16,7 @@ class AttendanceRequest extends Model
         'requested_clock_in',
         'requested_clock_out',
         'note',
+        'status',
     ];
 
     protected $casts = [
@@ -32,11 +33,6 @@ class AttendanceRequest extends Model
     public function attendance()
     {
         return $this->belongsTo(Attendance::class);
-    }
-
-    public function requestStatus()
-    {
-        return $this->belongsTo(RequestStatus::class);
     }
 
     public function requestBreakTimes()

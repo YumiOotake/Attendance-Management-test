@@ -27,7 +27,7 @@
                 <tbody class="attendance__tbody">
                     @forelse ($attendanceRequests as $attendanceRequest)
                         <tr class="attendance__row">
-                            <td class="attendance__item">{{ $attendanceRequest->requestStatus->name }}</td>
+                            <td class="attendance__item">{{ $attendanceRequest->status }}</td>
                             <td class="attendance__item">{{ $attendanceRequest->attendance->user->name }}</td>
                             <td class="attendance__item">{{ $attendanceRequest->attendance->date->format('Y/m/d') }}</td>
                             <td class="attendance__item">{{ $attendanceRequest->note }}</td>

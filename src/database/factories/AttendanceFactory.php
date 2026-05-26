@@ -13,13 +13,14 @@ class AttendanceFactory extends Factory
      */
     public function definition()
     {
-        $date = $this->faker->dateTimeBetween('-5 month', 'now');
+        $clockIn = '9:00';
+        $clockOut = '18:00';
 
         return [
-            'user_id' => 1,
-            'date' => $date->format('Y-m-d'),
-            'clock_in' => '09:00',
-            'clock_out' => '18:00',
+            'user_id' => 2,
+            'date' => now()->format('Y-m-d'),
+            'clock_in' => $clockIn,
+            'clock_out' => $clockOut,
         ];
     }
 }

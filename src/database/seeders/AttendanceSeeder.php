@@ -23,35 +23,53 @@ class AttendanceSeeder extends Seeder
             'long' => ['clock_in' => '08:00', 'clock_out' => '21:00', 'count' => 1],
         ];
 
-        $weekdays = [];
-        $start = Carbon::now()->startOfMonth();
-        $end = Carbon::now()->endOfMonth();
+        $this->createMonthlyAttendance($patterns, 1, 0, 17);
 
-        for ($date=$start; $date < $end; $date->addDay()) {
+        $normalPatterns = [
+            'normal' => ['clock_in' => '09:00', 'clock_out' => '18:00', 'count' => 15],
+        ];
+
+        for ($i=1; $i <= 5 ; $i++) {
+            $this->createMonthlyAttendance($normalPatterns, 1, $i, 15);
+        }
+
+        for ($userId=2; $userId <= 3 ; $userId++) {
+            for ($i = 0; $i <= 5; $i++) {
+                $this->createMonthlyAttendance($normalPatterns, $userId, $i, 15);
+            }
+        }
+    }
+
+    private function createMonthlyAttendance(array $patterns, int $userId, int $monthAgo, int $days)
+    {
+        $weekdays = [];
+        $start = Carbon::now()->subMonths($monthAgo)->startOfMonth();
+        $end = Carbon::now()->subMonths($monthAgo)->endOfMonth();
+
+        for ($date = $start; $date <= $end; $date->addDay()) {
             if ($date->isWeekday()) {
                 $weekdays[] = $date->format('Y-m-d');
             }
         }
 
-        // patternsのcountを元に配列を作る
-        $weekdaysArray1 = array_fill(0, $patterns['normal']['count'], $patterns['normal']);
-        $weekdaysArray2 = array_fill(0, $patterns['overtime']['count'], $patterns['overtime']);
-        $weekdaysArray3 = array_fill(0, $patterns['late']['count'], $patterns['late']);
-        $weekdaysArray4 = array_fill(0, $patterns['early']['count'], $patterns['early']);
-        $weekdaysArray5 = array_fill(0, $patterns['long']['count'], $patterns['long']);
+        $weekdaysArray = [];
+        foreach ($patterns as $pattern) {
+            $weekdaysArray = array_merge(
+                $weekdaysArray,
+                array_fill(0, $pattern['count'], $pattern)
+            );
+        }
 
-        $weekdaysArray = array_merge($weekdaysArray1, $weekdaysArray2, $weekdaysArray3, $weekdaysArray4, $weekdaysArray5);
-
-        
-
-        // シャッフルして平日に割り当てる
         shuffle($weekdaysArray);
-
-        $weekdays = array_slice($weekdays, 0, 15);
+        shuffle($weekdays);
+        $weekdays = array_slice($weekdays, 0, $days);
+        $weekdaysArray = array_slice($weekdaysArray, 0, $days);
         $schedule = array_combine($weekdays, $weekdaysArray);
+        $sortedSchedule = collect($schedule)->sortKeysDesc();
 
-        foreach ($schedule as $date => $pattern) {
+        foreach ($sortedSchedule as $date => $pattern) {
             Attendance::factory()->create([
+                'user_id' => $userId,
                 'date' => $date,
                 'clock_in' => $pattern['clock_in'],
                 'clock_out' => $pattern['clock_out'],

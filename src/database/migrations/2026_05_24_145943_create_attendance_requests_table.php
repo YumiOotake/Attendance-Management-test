@@ -17,10 +17,10 @@ class CreateAttendanceRequestsTable extends Migration
             $table->id();
             $table->foreignId('attendance_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('request_status_id')->constrained()->cascadeOnDelete();
             $table->time('requested_clock_in')->nullable();
             $table->time('requested_clock_out')->nullable();
             $table->text('note');
+            $table->integer('status');
             $table->timestamps();
         });
     }
