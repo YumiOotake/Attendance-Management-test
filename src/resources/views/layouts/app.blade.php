@@ -21,7 +21,7 @@
         <div class="header__inner">
             <div class="header__logo">
                 <a href="{{ route('attendance.index') }}" class="header__logo-link">
-                    <img src="{{ asset('storage/' . 'images/COACHTECHヘッダーロゴ .png') }}" alt="ヘッダーロゴ画像"
+                    <img src="{{ asset('storage/' . 'images/COACHTECHヘッダーロゴ.png') }}" alt="ヘッダーロゴ画像"
                         class="header__logo-img">
                 </a>
             </div>
@@ -35,7 +35,7 @@
                             <a href="{{ route('admin.staff.list') }}" class="header__nav-link">スタッフ一覧</a>
                         </div>
                         <div class="header__nav-item">
-                            <a href="{{ route('admin.request.list') }}" class="header__nav-link">申請一覧</a>
+                            <a href="{{ route('attendance.request.list') }}" class="header__nav-link">申請一覧</a>
                         </div>
                         <form action="{{ route('logout') }}" method="post" class="header__nav-item">
                             @csrf

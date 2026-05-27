@@ -9,6 +9,7 @@
         </div>
         <form action="{{ route('login') }}" method="POST" class="form">
             @csrf
+            <input type="hidden" name="login_type" value="admin">
             <div class="form__group">
                 <div class="form__group-title">
                     <label for="email" class="form__label">メールアドレス</label>
