@@ -35,4 +35,12 @@ class Attendance extends Model
     {
         return $this->hasMany(BreakTime::class);
     }
+
+    public function getStatusAttribute(): string
+    {
+        if ($this->clock_out) return 'done';
+        if ($this->breakTimes->whereNull('break_end')->count() > 0) return 'break';
+        if ($this->clock_in) return 'working';
+        return 'none';
+    }
 }

@@ -23,28 +23,58 @@ class AttendanceSeeder extends Seeder
             'long' => ['clock_in' => '08:00', 'clock_out' => '21:00', 'count' => 1],
         ];
 
-        $this->createMonthlyAttendance($patterns, 1, 0, 17);
-
         $normalPatterns = [
             'normal' => ['clock_in' => '09:00', 'clock_out' => '18:00', 'count' => 15],
         ];
 
-        for ($i=1; $i <= 5 ; $i++) {
-            $this->createMonthlyAttendance($normalPatterns, 1, $i, 15);
+        $allSchedule = collect();
+
+        // user1当月だけパターンあり17日
+
+        $schedule = $this->buildMonthlySchedule($patterns, 0, 17);
+        foreach ($schedule as $date => $pattern) {
+            $allSchedule->put($date . '_1', array_merge($pattern, ['user_id' => 1, 'date' => $date]));
         }
 
-        for ($userId=2; $userId <= 3 ; $userId++) {
-            for ($i = 0; $i <= 5; $i++) {
-                $this->createMonthlyAttendance($normalPatterns, $userId, $i, 15);
+        // user1過去5ヶ月は通常15日
+        for ($i = 1; $i <= 5; $i++) {
+            $schedule = $this->buildMonthlySchedule($normalPatterns, $i, 15);
+            foreach ($schedule as $date => $pattern) {
+                $allSchedule->put($date . '_1', array_merge($pattern, ['user_id' => 1, 'date' => $date]));
             }
         }
+
+        // user2,3は全6ヶ月通常15日
+        foreach ([2, 3] as $userId) {
+            for ($i = 0; $i <= 5; $i++) {
+                $schedule = $this->buildMonthlySchedule($normalPatterns, $i, 15);
+                foreach ($schedule as $date => $pattern) {
+                    $allSchedule->put($date . '_' . $userId, array_merge($pattern, ['user_id' => $userId, 'date' => $date]));
+                }
+            }
+        }
+
+        // 古い順にソートしてinsert
+        foreach ($allSchedule->sortBy('date') as $data) {
+            Attendance::factory()->create([
+                'user_id' => $data['user_id'],
+                'date' => $data['date'],
+                'clock_in' => $data['clock_in'],
+                'clock_out' => $data['clock_out'],
+            ]);
+        };
     }
 
-    private function createMonthlyAttendance(array $patterns, int $userId, int $monthAgo, int $days)
+    private function buildMonthlySchedule(array $patterns, int $monthAgo, int $days)
     {
         $weekdays = [];
         $start = Carbon::now()->subMonths($monthAgo)->startOfMonth();
-        $end = Carbon::now()->subMonths($monthAgo)->endOfMonth();
+        // $end = Carbon::now()->subMonths($monthAgo)->endOfMonth(); どっちにする？
+        if ($monthAgo === 0) {
+            $end = Carbon::now()->subDays(1);
+        } else {
+            $end = Carbon::now()->subMonths($monthAgo)->endOfMonth();
+        }
 
         for ($date = $start; $date <= $end; $date->addDay()) {
             if ($date->isWeekday()) {
@@ -64,16 +94,7 @@ class AttendanceSeeder extends Seeder
         shuffle($weekdays);
         $weekdays = array_slice($weekdays, 0, $days);
         $weekdaysArray = array_slice($weekdaysArray, 0, $days);
-        $schedule = array_combine($weekdays, $weekdaysArray);
-        $sortedSchedule = collect($schedule)->sortKeysDesc();
 
-        foreach ($sortedSchedule as $date => $pattern) {
-            Attendance::factory()->create([
-                'user_id' => $userId,
-                'date' => $date,
-                'clock_in' => $pattern['clock_in'],
-                'clock_out' => $pattern['clock_out'],
-            ]);
-        }
+        return collect(array_combine($weekdays, $weekdaysArray));
     }
 }

@@ -26,8 +26,8 @@
                 </p>
             </div>
             <div class="attendance__clock">
-                <p class="attendance__date">{{ $date->isoFormat('YYYY年M月D日(ddd)') }}</p>
-                <p class="attendance__time">{{ $date->format('H:i') }}</p>
+                <p class="attendance__date">{{ $now->isoFormat('YYYY年M月D日(ddd)') }}</p>
+                <p class="attendance__time">{{ $now->format('H:i') }}</p>
             </div>
             <div class="attendance__actions">
 

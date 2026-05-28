@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'showAttendancePage'])->name('attendance.index');
+    Route::patch('/attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('attendance.clock-in');
+    Route::patch('/attendance/{attendance}/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance.clock-out');
+    Route::patch('/attendance/{attendance}/break-start', [AttendanceController::class, 'breakStart'])->name('attendance.break-start');
+    Route::patch('/attendance/{attendance}/break-end', [AttendanceController::class, 'breakEnd'])->name('attendance.break-end');
     Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance.list');
     Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
     Route::get('/stamp_correction_request/list', [AttendanceController::class, 'requestList'])->name('attendance.request.list');//2ルート分

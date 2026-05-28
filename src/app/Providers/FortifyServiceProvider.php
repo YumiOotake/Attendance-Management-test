@@ -68,6 +68,11 @@ class FortifyServiceProvider extends ServiceProvider
             return route('attendance.index');
         });
 
+        //効いてない
+        Fortify::redirects('logout', function () {
+            return route('login');
+        });
+
         Fortify::registerView(function () {
             return view('auth.register');
         });
