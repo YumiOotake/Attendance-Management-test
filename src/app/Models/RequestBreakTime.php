@@ -23,4 +23,14 @@ class RequestBreakTime extends Model
     {
         return $this->belongsTo(AttendanceRequest::class);
     }
+
+    public function getFormattedBreakStartAttribute()
+    {
+        return $this->requested_break_start ? substr($this->requested_break_start, 0, 5) : null;
+    }
+
+    public function getFormattedBreakEndAttribute()
+    {
+        return $this->requested_break_end ? substr($this->requested_break_end, 0, 5) : null;
+    }
 }

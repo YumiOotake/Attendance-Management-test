@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/attendance/{attendance}/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance.clock-out');
     Route::patch('/attendance/{attendance}/break-start', [AttendanceController::class, 'breakStart'])->name('attendance.break-start');
     Route::patch('/attendance/{attendance}/break-end', [AttendanceController::class, 'breakEnd'])->name('attendance.break-end');
-    Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance.list');
-    Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
-    Route::get('/stamp_correction_request/list', [AttendanceController::class, 'requestList'])->name('attendance.request.list');//2ルート分
+    Route::get('/attendance/list', [AttendanceDetailController::class, 'list'])->name('attendance.list');
+    Route::get('/attendance/detail/{id}', [AttendanceDetailController::class, 'show'])->name('attendance.show');
+    Route::post('/attendance/detail/{id}', [AttendanceDetailController::class, 'request'])->name('attendance.request');
+    Route::get('/stamp_correction_request/list', [AttendanceDetailController::class, 'requestList'])->name('attendance.request.list');//2ルート分
 });
 
 Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');

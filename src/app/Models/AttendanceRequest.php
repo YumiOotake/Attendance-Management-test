@@ -12,7 +12,6 @@ class AttendanceRequest extends Model
     protected $fillable = [
         'attendance_id',
         'user_id',
-        'request_status_id',
         'requested_clock_in',
         'requested_clock_out',
         'note',
@@ -22,7 +21,6 @@ class AttendanceRequest extends Model
     protected $casts = [
         'attendance_id' => 'integer',
         'user_id' => 'integer',
-        'request_status_id' => 'integer',
     ];
 
     public function user()
@@ -38,5 +36,24 @@ class AttendanceRequest extends Model
     public function requestBreakTimes()
     {
         return $this->hasMany(RequestBreakTime::class);
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        return match ($this->status) {
+            1 => '承認待ち',
+            2 => '承認済み',
+            default => '承認待ち',
+        };
+    }
+
+    public function getFormattedClockInAttribute()
+    {
+        return $this->requested_clock_in ? substr($this->requested_clock_in, 0, 5) : null;
+    }
+
+    public function getFormattedClockOutAttribute()
+    {
+        return $this->requested_clock_out ? substr($this->requested_clock_out, 0, 5) : null;
     }
 }

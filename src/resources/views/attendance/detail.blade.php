@@ -39,8 +39,9 @@
                 </dl>
                 <p class="request-form__message">*承認待ちのため修正はできません。</p>
             @else
-                <form action="{{ route('attendance.request', $attendance) }}" method="POST" class="request-form">
+                <form action="{{ route('attendance.request', $attendance->id ?? 0) }}" method="POST" class="request-form">
                     @csrf
+                    <input type="hidden" name="date" value="{{ request('date', $attendance->date) }}">
                     <div class="request-form__group">
                         <label class="request-form__label">名前</label>
                         <p class="request-form__value">{{ $attendance->user->name }}</p>
@@ -53,17 +54,26 @@
                     <div class="request-form__group">
                         <label for="requested_clock_in" class="request-form__label">出勤・退勤</label>
                         <div class="request-form__content">
-                            <input type="text" id="requested_clock_in" name="requested_clock_in"
-                                value="{{ old('requested_clock_in', $attendance->formatted_clock_in) }}"
-                                class="request-form__input">
+                            <div class="request-form__clock-in">
+                                <input type="text" id="requested_clock_in" name="requested_clock_in"
+                                    value="{{ old('requested_clock_in', $attendance->formatted_clock_in) }}"
+                                    class="request-form__input">
+                                <div class="request-form__error">
+                                    @error('requested_clock_in')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
                             <span class="request-form__span">〜</span>
-                            <input type="text" id="requested_clock_out" name="requested_clock_out"
-                                value="{{ old('requested_clock_out', $attendance->formatted_clock_out) }}"
-                                class="request-form__input">
-                            <div class="request-form__error">
-                                @error('requested_clock_in')
-                                    {{ $message }}
-                                @enderror
+                            <div class="request-form__clock-in">
+                                <input type="text" id="requested_clock_out" name="requested_clock_out"
+                                    value="{{ old('requested_clock_out', $attendance->formatted_clock_out) }}"
+                                    class="request-form__input">
+                                <div class="request-form__error">
+                                    @error('requested_clock_out')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -72,18 +82,27 @@
                             <label for="requested_break_start_{{ $key }}"
                                 class="request-form__label">休憩{{ $key === 0 ? '' : $key + 1 }}</label>
                             <div class="request-form__content">
-                                <input type="text" id="requested_break_start_{{ $key }}"
-                                    name="requested_break_start[]"
-                                    value="{{ old('requested_break_start.' . $key, $break?->formatted_break_start) }}"
-                                    class="request-form__input">
+                                <div class="request-form__break_start">
+                                    <input type="text" id="requested_break_start_{{ $key }}"
+                                        name="requested_break_start[]"
+                                        value="{{ old('requested_break_start.' . $key, $break?->formatted_break_start) }}"
+                                        class="request-form__input">
+                                    <div class="request-form__error">
+                                        @error('requested_break_start.' . $key)
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
                                 <span class="request-form__span">〜</span>
-                                <input type="text" name="requested_break_end[]"
-                                    value="{{ old('requested_break_end.' . $key, $break?->formatted_break_end) }}"
-                                    class="request-form__input">
-                                <div class="request-form__error">
-                                    @error('requested_break_start')
-                                        {{ $message }}
-                                    @enderror
+                                <div class="request-form__break_start">
+                                    <input type="text" name="requested_break_end[]"
+                                        value="{{ old('requested_break_end.' . $key, $break?->formatted_break_end) }}"
+                                        class="request-form__input">
+                                    <div class="request-form__error">
+                                        @error('requested_break_end.' . $key)
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -93,16 +112,26 @@
                         <label for="requested_break_start"
                             class="request-form__label">休憩{{ count($breaks) === 1 ? '2' : count($breaks) + 1 }}</label>
                         <div class="request-form__content">
-                            <input type="text" id="requested_break_start" name="requested_break_start[]" value="{{ old('requested_break_start')}}"
-                                class="request-form__input">
-                            <span class="request-form__span">〜</span>
-                            <input type="text" name="requested_break_end[]" value="{{ old('requested_break_end')}}"
-                                class="request-form__input">
-                            <div class="request-form__error">
-                                @error('requested_break_start')
-                                    {{ $message }}
-                                @enderror
+                            <div class="request-form__break_start">
+                                <input type="text" id="requested_break_start" name="requested_break_start[]"
+                                    value="{{ old('requested_break_start.' . count($breaks)) }}" class="request-form__input">
+                                <div class="request-form__error">
+                                    @error('requested_break_start.' . count($breaks))
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
+                            <span class="request-form__span">〜</span>
+                            <div class="request-form__break_end">
+                                <input type="text" name="requested_break_end[]" value="{{ old('requested_break_end.' . count($breaks)) }}"
+                                    class="request-form__input">
+                                <div class="request-form__error">
+                                    @error('requested_break_end.' . count($breaks))
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="request-form__group">

@@ -2,9 +2,147 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AttendanceRequestStoreRequest;
+use App\Models\Attendance;
+use App\Models\AttendanceRequest;
+use App\Models\RequestBreakTime;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
 class AttendanceDetailController extends Controller
 {
-    //
+    public function list(Request $request)
+    {
+        $user = auth()->user();
+        $monthOffset = $request->query('month', 0);
+
+        $targetMonth = Carbon::now()->addMonths($monthOffset);
+
+        $startOfMonth = $targetMonth->copy()->startOfMonth();
+        $endOfMonth = $targetMonth->copy()->endOfMonth();
+
+        $dateLists = CarbonPeriod::create($startOfMonth, $endOfMonth);
+
+        // $attendanceByDate = [];
+        // foreach ($dateLists as $dateList) {
+        //     $attendance = Attendance::where('user_id', $user->id)
+        //         ->where('date', $dateList->format('Y-m-d'))
+        //         ->first();
+
+        //     $attendanceByDate[$dateList->format('Y-m-d')] = $attendance;
+        // }
+        $attendanceByDate = Attendance::where('user_id', $user->id)
+            ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->get()
+            ->keyBy(fn($a) => $a->date->format('Y-m-d'));
+
+        return view('attendance.list', compact('targetMonth', 'monthOffset', 'dateLists', 'attendanceByDate'));
+    }
+
+    public function requestList(Request $request)
+    {
+        $user = auth()->user();
+        $tab = $request->query('tab');
+
+        if ($tab === 'pending' || empty($tab)) {
+            $attendanceRequests = AttendanceRequest::where('user_id', $user->id)
+                ->where('status', 1)
+                ->get();
+        } else {
+            $attendanceRequests = AttendanceRequest::where('user_id', $user->id)
+                ->where('status', 2)
+                ->get();
+        }
+
+        return view('attendance.stamp_correction_request', compact('attendanceRequests'));
+    }
+
+    public function show($id, Request $request)
+    {
+        if ($id == 0 && !empty($request->date)) {
+            $attendance = new Attendance([
+                'user_id' => auth()->id(),
+                'date' => $request->date,
+            ]);
+        } else {
+            $attendance = Attendance::where('id', $id)
+                ->where('user_id', auth()->id())
+                ->firstOrFail();
+        }
+
+        $this->authorize('view', $attendance);
+
+        $attendanceRequest = $attendance->exists
+            ? AttendanceRequest::where('attendance_id', $attendance->id)
+            ->where('status', 1)
+            ->first()
+            : null;
+        $isPending = $attendanceRequest !== null;
+        $breaks = $attendance->exists ? $attendance->breakTimes : collect();
+        $requestBreaks = $attendanceRequest?->requestBreakTimes ?? collect();
+
+        return view('attendance.detail', compact(
+            'attendance',
+            'attendanceRequest',
+            'isPending',
+            'breaks',
+            'requestBreaks'
+        ));
+    }
+
+    public function request($id, AttendanceRequestStoreRequest $request)
+    {
+        $user = auth()->user();
+
+        if ($id == 0 && !empty($request->date)) {
+            $attendance = Attendance::firstOrCreate([
+                'user_id' => auth()->id(),
+                'date' => $request->date,
+            ]);
+        } else {
+            $attendance = Attendance::where('id', $id)
+                ->where('user_id', auth()->id())
+                ->firstOrFail();
+        }
+
+        $clock_in = $request->requested_clock_in ? Carbon::createFromFormat('H:i', $request->requested_clock_in) : null;
+        $clock_out = $request->requested_clock_out ? Carbon::createFromFormat('H:i', $request->requested_clock_out) : null;
+
+        $hasPendingRequest = AttendanceRequest::where('attendance_id', $attendance->id)
+            ->where('user_id', $user->id)
+            ->where('status', 1)
+            ->exists();
+        if ($hasPendingRequest) {
+            return redirect()->route('attendance.request.list');
+        }
+
+        $this->authorize('create', [AttendanceRequest::class, $attendance]);
+
+        $attendanceRequest = AttendanceRequest::create([
+            'attendance_id' => $attendance->id,
+            'user_id' => $user->id,
+            'requested_clock_in' => $clock_in,
+            'requested_clock_out' => $clock_out,
+            'note' => $request->note,
+            'status' => 1,
+        ]);
+
+        $break_starts = $request->requested_break_start;
+        $break_ends = $request->requested_break_end;
+
+        foreach ($break_starts as $key => $break_start) {
+            if (empty($break_start) && empty($break_ends[$key])) {
+                continue;
+            }
+            $break_start = Carbon::createFromFormat('H:i', $break_start);
+            $break_end = Carbon::createFromFormat('H:i', $break_ends[$key]);
+            RequestBreakTime::create([
+                'attendance_request_id' => $attendanceRequest->id,
+                'requested_break_start' => $break_start,
+                'requested_break_end' => $break_end,
+            ]);
+        }
+        return redirect()->route('attendance.request.list');
+    }
 }

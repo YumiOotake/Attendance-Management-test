@@ -23,4 +23,14 @@ class BreakTime extends Model
     {
         return $this->belongsTo(Attendance::class);
     }
+
+    public function getFormattedBreakStartAttribute()
+    {
+        return $this->break_start ? substr($this->break_start, 0, 5) : null;
+    }
+
+    public function getFormattedBreakEndAttribute()
+    {
+        return $this->break_end ? substr($this->break_end, 0, 5) : null;
+    }
 }

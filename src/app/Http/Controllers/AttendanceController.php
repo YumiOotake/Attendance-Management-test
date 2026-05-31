@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
@@ -96,7 +95,7 @@ class AttendanceController extends Controller
             ->where('break_end', null)
             ->first();
 
-        if (!empty($attendance->clock_out) || !empty($breakTime)) {
+        if (!empty($attendance->clock_out) || !empty($breakTime) || empty($attendance->clock_in)) {
             return redirect()->route('attendance.index');
         }
 
