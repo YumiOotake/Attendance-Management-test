@@ -42,16 +42,31 @@ class AttendanceDetailController extends Controller
 
     public function requestList(Request $request)
     {
-        $user = auth()->user();
         $tab = $request->query('tab');
+        $user = auth()->user();
+
+        if (auth()->user()->admin_status) {
+            if ($tab === 'pending' || empty($tab)) {
+                $attendanceRequests = AttendanceRequest::where('status', 1)
+                    ->with(['attendance.user'])
+                    ->get();
+            } else {
+                $attendanceRequests = AttendanceRequest::where('status', 2)
+                    ->with(['attendance.user'])
+                    ->get();
+            }
+            return view('attendance.stamp_correction_request', compact('attendanceRequests'));
+        }
 
         if ($tab === 'pending' || empty($tab)) {
             $attendanceRequests = AttendanceRequest::where('user_id', $user->id)
                 ->where('status', 1)
+                ->with(['attendance.user'])
                 ->get();
         } else {
             $attendanceRequests = AttendanceRequest::where('user_id', $user->id)
                 ->where('status', 2)
+                ->with(['attendance.user'])
                 ->get();
         }
 

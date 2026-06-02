@@ -37,7 +37,7 @@
                 </div>
             </dl>
             @if ($isPending)
-                <form action="{{ route('admin.approve', $attendanceRequest) }}" method="POST">
+                <form action="{{ route('admin.request.approve', $attendanceRequest) }}" method="POST">
                     @csrf
                     @method('PATCH')
                     <div class="request-form__button">

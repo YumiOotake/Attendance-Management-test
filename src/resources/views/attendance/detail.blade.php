@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <span class="request-form__span">〜</span>
-                            <div class="request-form__clock-in">
+                            <div class="request-form__clock-out">
                                 <input type="text" id="requested_clock_out" name="requested_clock_out"
                                     value="{{ old('requested_clock_out', $attendance->formatted_clock_out) }}"
                                     class="request-form__input">
@@ -88,18 +88,18 @@
                                         value="{{ old('requested_break_start.' . $key, $break?->formatted_break_start) }}"
                                         class="request-form__input">
                                     <div class="request-form__error">
-                                        @error('requested_break_start.' . $key)
+                                        @error("requested_break_start.$key")
                                             {{ $message }}
                                         @enderror
                                     </div>
                                 </div>
                                 <span class="request-form__span">〜</span>
-                                <div class="request-form__break_start">
+                                <div class="request-form__break_end">
                                     <input type="text" name="requested_break_end[]"
                                         value="{{ old('requested_break_end.' . $key, $break?->formatted_break_end) }}"
                                         class="request-form__input">
                                     <div class="request-form__error">
-                                        @error('requested_break_end.' . $key)
+                                        @error("requested_break_end.$key")
                                             {{ $message }}
                                         @enderror
                                     </div>

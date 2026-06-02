@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminRequestController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceDetailController;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/attendance/list', [AdminController::class, 'attendanceList'])->name('admin.list');
     Route::get('/admin/attendance/{id}', [AdminController::class, 'attendanceDetail'])->name('admin.detail');
+    Route::patch('/admin/attendance/{id}', [AdminController::class, 'attendanceRequest'])->name('admin.request');
     Route::get('/admin/staff/list', [AdminController::class, 'staffList'])->name('admin.staff.list');
     Route::get('/admin/attendance/staff/{id}', [AdminController::class, 'staffAttendanceList'])->name('admin.attendance.staff');
-    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminController::class, 'requestApprove'])->name('admin.request.approve');
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestController::class, 'requestApproveShow'])->name('admin.request.approve.show');
+    Route::patch('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestController::class, 'requestApprove'])->name('admin.request.approve');
 });

@@ -33,8 +33,13 @@
                             <td class="attendance__item">{{ $attendanceRequest->note }}</td>
                             <td class="attendance__item">{{ $attendanceRequest->created_at->format('Y/m/d') }}</td>
                             <td class="attendance__item">
-                                <a href="{{ route('attendance.show', $attendanceRequest->attendance) }}"
-                                    class="attendance__detail">詳細</a>
+                                @if (auth()->user()->admin_status)
+                                    <a href="{{ route('admin.request.approve.show', $attendanceRequest) }}"
+                                        class="attendance__detail">詳細</a>
+                                @else
+                                    <a href="{{ route('attendance.show', $attendanceRequest->attendance) }}"
+                                        class="attendance__detail">詳細</a>
+                                @endif
                             </td>
                         </tr>
                     @empty

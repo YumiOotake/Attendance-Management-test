@@ -5,20 +5,20 @@
 @section('content')
     <div class="attendance__list">
         <div class="attendance__inner">
-            <h1 class="attendance__title">{{ $date->format('Y/n/j') }}の勤怠</h1>
+            <h1 class="attendance__title">{{ $targetDate->format('Y/n/j') }}の勤怠</h1>
 
             <div class="attendance__month-navigation">
-                <a href="{{ route('admin.attendance.list') }}" class="attendance__button--previous">
+                <a href="{{ route('admin.list', ['date' => $dateOffset - 1]) }}" class="attendance__button--previous">
                     <img src="{{ asset('storage/' . 'images/arrow.png') }}" alt="矢印画像" class="attendance__arrow-image">
-                    前月
+                    前日
                 </a>
                 <div class="attendance__date">
                     <img src="{{ asset('storage/' . 'images/calendar.png') }}" alt="カレンダー画像"
                         class="attendance__calendar-image">
-                    <p class="attendance__current-date">{{ $date->format('Y/m/d') }}</p>
+                    <p class="attendance__current-date">{{ $targetDate->format('Y/m/d') }}</p>
                 </div>
-                <a href="{{ route('admin.attendance.list') }}" class="attendance__button--next">
-                    翌月
+                <a href="{{ route('admin.list', ['date' => $dateOffset + 1]) }}" class="attendance__button--next">
+                    翌日
                     <img src="{{ asset('storage/' . 'images/arrow.png') }}" alt="矢印画像"
                         class="attendance__arrow-image attendance__arrow-image--next">
                 </a>
@@ -43,7 +43,7 @@
                             <td class="attendance__item">{{ $attendance->total_break_time }}</td>
                             <td class="attendance__item">{{ $attendance->total_work_time }}</td>
                             <td class="attendance__item">
-                                <a href="{{ route('admin.attendance.detail', $attendance) }}" class="attendance__detail">詳細</a>
+                                <a href="{{ route('admin.detail', $attendance) }}" class="attendance__detail">詳細</a>
                             </td>
                         </tr>
                     @empty
