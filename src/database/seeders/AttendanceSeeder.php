@@ -31,14 +31,14 @@ class AttendanceSeeder extends Seeder
 
         // user1当月だけパターンあり17日
 
-        $schedule = $this->buildMonthlySchedule($patterns, 0, 17);
+        $schedule = $this->buildMonthlySchedule($patterns, 0, 17, 1);
         foreach ($schedule as $date => $pattern) {
             $allSchedule->put($date . '_1', array_merge($pattern, ['user_id' => 1, 'date' => $date]));
         }
 
         // user1過去5ヶ月は通常15日
         for ($i = 1; $i <= 5; $i++) {
-            $schedule = $this->buildMonthlySchedule($normalPatterns, $i, 15);
+            $schedule = $this->buildMonthlySchedule($normalPatterns, $i, 15, 1);
             foreach ($schedule as $date => $pattern) {
                 $allSchedule->put($date . '_1', array_merge($pattern, ['user_id' => 1, 'date' => $date]));
             }
@@ -46,8 +46,8 @@ class AttendanceSeeder extends Seeder
 
         // user2,3は全6ヶ月通常15日
         foreach ([2, 3] as $userId) {
-            for ($i = 0; $i <= 5; $i++) {
-                $schedule = $this->buildMonthlySchedule($normalPatterns, $i, 15);
+            for ($i = 1; $i <= 5; $i++) {
+                $schedule = $this->buildMonthlySchedule($normalPatterns, $i, 15, $userId);
                 foreach ($schedule as $date => $pattern) {
                     $allSchedule->put($date . '_' . $userId, array_merge($pattern, ['user_id' => $userId, 'date' => $date]));
                 }
@@ -65,13 +65,17 @@ class AttendanceSeeder extends Seeder
         };
     }
 
-    private function buildMonthlySchedule(array $patterns, int $monthAgo, int $days)
+    private function buildMonthlySchedule(array $patterns, int $monthAgo, int $days, int $userId)
     {
         $weekdays = [];
         $start = Carbon::now()->subMonths($monthAgo)->startOfMonth();
-        // $end = Carbon::now()->subMonths($monthAgo)->endOfMonth(); どっちにする？
+
         if ($monthAgo === 0) {
-            $end = Carbon::now()->subDays(1);
+            if ($userId === 1) {
+                $end = Carbon::now()->endOfMonth();
+            } else {
+                $end = Carbon::now()->subDays(1);
+            }
         } else {
             $end = Carbon::now()->subMonths($monthAgo)->endOfMonth();
         }
@@ -92,6 +96,7 @@ class AttendanceSeeder extends Seeder
 
         shuffle($weekdaysArray);
         shuffle($weekdays);
+
         $weekdays = array_slice($weekdays, 0, $days);
         $weekdaysArray = array_slice($weekdaysArray, 0, $days);
 

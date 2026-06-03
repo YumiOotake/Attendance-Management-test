@@ -51,6 +51,9 @@
                         <div class="header__nav-item">
                             <a href="{{ route('attendance.request.list') }}" class="header__nav-link">申請</a>
                         </div>
+                        <div class="header__nav-item">
+                            <a href="{{ route('attendance.report') }}" class="header__nav-link">レポート</a>
+                        </div>
                         <form action="{{ route('logout') }}" method="post" class="header__nav-item">
                             @csrf
                             <button type="submit" class="header__nav-button">ログアウト</button>

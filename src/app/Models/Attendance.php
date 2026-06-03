@@ -94,4 +94,39 @@ class Attendance extends Model
 
         return sprintf('%d:%02d', $hours, $minutes);
     }
+
+    public function getTotalBreakMinute(): int
+    {
+        $totalMinutes = 0;
+
+        foreach ($this->breakTimes as $break) {
+            if ($break->break_start && $break->break_end) {
+                $totalMinutes += Carbon::parse($break->break_end)
+                    ->diffInMinutes(Carbon::parse($break->break_start));
+            }
+        }
+
+        return $totalMinutes;
+    }
+
+    public function getTotalWorkMinutes(): int
+    {
+        $totalBreakMinutes = 0;
+        $totalMinutes = 0;
+
+        foreach ($this->breakTimes as $break) {
+            if ($break->break_start && $break->break_end) {
+                $totalBreakMinutes += Carbon::parse($break->break_end)
+                    ->diffInMinutes(Carbon::parse($break->break_start));
+            }
+        }
+        if ($this->clock_in && $this->clock_out) {
+            $totalMinutes += Carbon::parse($this->clock_in)
+                ->diffInMinutes(Carbon::parse($this->clock_out));
+        }
+
+        $totalWorkMinutes = $totalMinutes - $totalBreakMinutes;
+
+        return $totalWorkMinutes;
+    }
 }
