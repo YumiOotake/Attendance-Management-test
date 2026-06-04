@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'showAttendancePage'])->name('attendance.index');
     Route::patch('/attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('attendance.clock-in');
     Route::patch('/attendance/{attendance}/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance.clock-out');
@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
     Route::get('/admin/attendance/list', [AdminController::class, 'attendanceList'])->name('admin.list');
     Route::get('/admin/attendance/{id}', [AdminController::class, 'attendanceDetail'])->name('admin.detail');
@@ -42,4 +42,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/attendance/staff/{id}', [AdminController::class, 'staffAttendanceList'])->name('admin.attendance.staff');
     Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestController::class, 'requestApproveShow'])->name('admin.request.approve.show');
     Route::patch('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestController::class, 'requestApprove'])->name('admin.request.approve');
+    Route::get('/export', [AdminController::class, 'export'])->name('export');
 });

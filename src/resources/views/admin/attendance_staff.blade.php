@@ -60,7 +60,9 @@
                     @endforelse
                 </tbody>
             </table>
-            <button class="attendance__csv">CSV出力</button>
+            <div class="attendance__export">
+                <a href="{{ route('export', ['id' => $user->id, 'month' => $monthOffset]) }}" class="attendance__export--button">CSV出力</a>
+            </div>
         </div>
     </div>
 @endsection

@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminController extends Controller
 {
@@ -139,5 +140,59 @@ class AdminController extends Controller
 
 
         return view('admin.attendance_staff', compact('targetMonth', 'monthOffset', 'dateLists', 'attendanceByDate', 'user'));
+    }
+
+    public function export(Request $request)
+    {
+        $user = User::where('id', $request->query('id'))->firstOrFail();
+        $monthOffset = $request->query('month', 0);
+
+        $targetMonth = Carbon::now()->addMonths($monthOffset);
+
+        $startOfMonth = $targetMonth->copy()->startOfMonth();
+        $endOfMonth = $targetMonth->copy()->endOfMonth();
+
+        $dateLists = CarbonPeriod::create($startOfMonth, $endOfMonth);
+
+        $attendanceByDate = Attendance::where('user_id', $user->id)
+            ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->with('breakTimes')
+            ->get()
+            ->keyBy(fn($a) => $a->date->format('Y-m-d'));
+
+        $attendances = [];
+        foreach ($dateLists as $dateList) {
+            $attendances[] = $attendanceByDate[$dateList->format('Y-m-d')] ?? null;
+        }
+
+        $csvHeader = ['日付', '出勤', '退勤', '休憩', '合計'];
+
+        $response = new StreamedResponse(function () use ($attendances, $csvHeader, $dateLists) {
+
+            $handle = fopen('php://output', 'w');
+
+            fprintf($handle, "\xEF\xBB\xBF");
+
+            fputcsv($handle, $csvHeader);
+
+            foreach ($dateLists as $key => $dateList) {
+                $attendance = $attendances[$key] ?? null;
+                fputcsv($handle, [
+                    $dateList->format('Y/m/d'),
+                    $attendance->formatted_clock_in ?? '',
+                    $attendance->formatted_clock_out ?? '',
+                    $attendance->total_break_time ?? '',
+                    $attendance->total_work_time ?? '',
+                ]);
+            }
+
+            fclose($handle);
+        });
+
+        $filename = $user->name . '_' . $targetMonth->format('Y-m') . '.csv';
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
+
+        return $response;
     }
 }

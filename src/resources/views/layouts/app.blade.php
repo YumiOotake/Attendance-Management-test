@@ -39,6 +39,7 @@
                         </div>
                         <form action="{{ route('logout') }}" method="post" class="header__nav-item">
                             @csrf
+                            <input type="hidden" name="login_type" value="admin">
                             <button type="submit" class="header__nav-button">ログアウト</button>
                         </form>
                     @else
@@ -56,6 +57,7 @@
                         </div>
                         <form action="{{ route('logout') }}" method="post" class="header__nav-item">
                             @csrf
+                            <input type="hidden" name="login_type" value="user">
                             <button type="submit" class="header__nav-button">ログアウト</button>
                         </form>
                     @endif

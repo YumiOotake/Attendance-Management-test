@@ -6,12 +6,17 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
-use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
+use Laravel\Fortify\Contracts\LogoutResponse;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
+use Laravel\Fortify\Contracts\VerifyEmailResponse;
+use App\Providers\RouteServiceProvider;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -23,11 +28,6 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->bind(
             \Laravel\Fortify\Http\Requests\LoginRequest::class,
             \App\Http\Requests\LoginRequest::class,
-        );
-
-        $this->app->singleton(
-            \Laravel\Fortify\Contracts\LoginResponse::class,
-            \App\Http\Responses\LoginResponse::class
         );
     }
 
@@ -66,16 +66,50 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
-        Fortify::redirects('login', function () {
-            if (request()->login_type === 'admin') {
-                return route('admin.list');
+        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
+            public function toResponse($request)
+            {
+                return redirect()->route('verification.notice');
             }
-            return route('attendance.index');
         });
 
-        //効いてない
-        Fortify::redirects('logout', function () {
-            return route('login');
+        //ログインした時、メール認証してなかったら認証画面へ
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+            public function toResponse($request)
+            {
+                /** @var \App\Models\User $user */
+                $user = Auth::user();
+
+                if (!$user->hasVerifiedEmail()) {
+                    return redirect()->route('verification.notice');
+                }
+
+                if (request()->login_type === 'admin') {
+                    return redirect()->route('admin.list');
+                }
+
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
+        });
+
+        $this->app->instance(VerifyEmailResponse::class, new class implements VerifyEmailResponse {
+            public function toResponse($request)
+            {
+                if (auth()->user()->admin_status) {
+                    return redirect()->route('admin.list');
+                }
+                return redirect()->route('attendance.index');
+            }
+        });
+
+        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
+            public function toResponse($request)
+            {
+                if ($request->login_type === 'admin') {
+                    return redirect()->route('admin.login');
+                }
+                return redirect()->route('login');
+            }
         });
 
         Fortify::registerView(function () {
@@ -84,6 +118,10 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::loginView(function () {
             return view('auth.login');
+        });
+
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email');
         });
     }
 }
