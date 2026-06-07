@@ -100,46 +100,28 @@ body {
 
 .attendance__title {
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 700;
     border-left: 8px solid var(--color-main);
     padding-left: 20px;
 }
 
 .attendance__list {
     color: var(--color-sub);
-    font-weight: bold;
+    font-weight: 700;
     letter-spacing: 15%;
     margin: 50px 0;
 }
 
 @media (min-width: 1400px) and (max-width: 1540px) {
-    .header {
-        padding: 0 24px;
-    }
-
     .header__logo {
-        width: 320px;
+        width: 340px;
     }
 
     .header__nav {
-        gap: 28px;
-        font-size: 22px;
-    }
-
-    .header__nav-button {
-        font-size: 22px;
+        gap: 32px;
     }
 
     .l-inner {
         max-width: 860px;
-    }
-
-    .attendance__title {
-        font-size: 28px;
-        padding-left: 16px;
-    }
-
-    .attendance__list {
-        margin: 40px 0;
     }
 }

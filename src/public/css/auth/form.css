@@ -89,13 +89,6 @@ body {
 @media (min-width: 1400px) and (max-width: 1540px) {
     .form__content {
         max-width: 640px;
-    }
-
-    .form__heading-title {
-        font-size: 34px;
-    }
-
-    .form__button-submit {
-        font-size: 24px;
+        margin: 70px auto;
     }
 }

@@ -28,7 +28,7 @@
 
 .attendance__time {
     font-size: 80px;
-    font-weight: bold;
+    font-weight: 700;
     letter-spacing: 15%;
 }
 
@@ -40,7 +40,7 @@
 .attendance__button {
     width: 200px;
     font-size: 32px;
-    font-weight: bold;
+    font-weight: 700;
     color: var(--color-white);
     background-color: var(--color-main);
     border-radius: 20px;
@@ -56,32 +56,14 @@
 
 .attendance__message {
     font-size: 26px;
+    font-weight: 700;
     margin: 50px;
+    letter-spacing: 15%;
 }
 
 @media (min-width: 1400px) and (max-width: 1540px) {
     .attendance {
         width: 64%;
-        margin-top: 7%;
-    }
-
-    .attendance__panel {
-        gap: 24px;
-    }
-
-    .attendance__status {
-        width: 96px;
-        height: 38px;
-        line-height: 38px;
-        font-size: 16px;
-    }
-
-    .attendance__date {
-        font-size: 36px;
-    }
-
-    .attendance__time {
-        font-size: 72px;
     }
 
     .attendance__buttons {
@@ -90,13 +72,10 @@
 
     .attendance__button {
         width: 180px;
-        font-size: 28px;
         margin: 40px 0;
-        padding: 10px 0;
     }
 
     .attendance__message {
-        font-size: 24px;
         margin: 40px 0;
     }
 }

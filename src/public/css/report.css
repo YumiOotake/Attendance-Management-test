@@ -89,22 +89,6 @@ body {
 }
 
 @media (min-width: 1400px) and (max-width: 1540px) {
-    .l-inner {
-        max-width: 860px;
-    }
-
-    .attendance-report__group {
-        margin: 40px 0;
-    }
-
-    .attendance-report__title {
-        font-size: 26px;
-    }
-
-    .attendance-report__sub-title {
-        font-size: 18px;
-    }
-
     .attendance-report__summary {
         gap: 16px;
     }
@@ -114,12 +98,7 @@ body {
         padding: 14px;
     }
 
-    .attendance-report__result {
-        font-size: 24px;
-    }
-
-    .attendance-report__header,
-    .attendance-report__item {
-        font-size: 15px;
+    .attendance-report__group {
+        margin: 40px 0;
     }
 }

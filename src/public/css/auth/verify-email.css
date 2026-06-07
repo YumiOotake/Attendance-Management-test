@@ -36,29 +36,16 @@
 
 @media (min-width: 1400px) and (max-width: 1540px) {
     .form__content {
-        width: 100%;
         max-width: 680px;
-        margin: 180px auto 0;
         padding: 0 40px;
         box-sizing: border-box;
     }
 
     .form__notice-text {
-        font-size: 24px;
-        line-height: 1.8;
         margin-bottom: 56px;
-    }
-
-    .form__button-link {
-        font-size: 24px;
-        padding: 18px 32px;
     }
 
     .form__button {
         margin-top: 48px;
-    }
-
-    .form__button-submit {
-        font-size: 24px;
     }
 }
