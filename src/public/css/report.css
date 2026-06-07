@@ -1,0 +1,125 @@
+body {
+    background-color: var(--color-white);
+}
+
+.attendance-report__list {
+    font-weight: bold;
+}
+
+.attendance-report__group {
+    margin: 50px 0;
+}
+
+.attendance-report__title {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.attendance-report__text {
+    font-size: 20px;
+}
+
+.attendance-report__sub-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.attendance-report__summary {
+    display: flex;
+    align-items: center;
+    gap: 2%;
+}
+
+.attendance-report__card {
+    width: 32%;
+    border: 1px solid var(--color-border);
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.attendance-report__label {
+    font-size: 14px;
+    color: var(--color-sub);
+}
+
+.attendance-report__result {
+    font-size: 28px;
+}
+
+.attendance-report__monthly-table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.attendance-report__header {
+    padding: 16px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.attendance-report__month {
+    width: 60%;
+}
+
+.attendance-report__overtime {
+    text-align: right;
+}
+
+.attendance-report__item:last-child {
+    text-align: right;
+}
+
+.attendance-report__item {
+    padding: 16px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.attendance-report__description {
+    font-size: 14px;
+    color: var(--color-sub);
+    margin-bottom: 20px;
+}
+
+.attendance-report__count {
+    letter-spacing: 15%;
+}
+
+@media (min-width: 1400px) and (max-width: 1540px) {
+    .l-inner {
+        max-width: 860px;
+    }
+
+    .attendance-report__group {
+        margin: 40px 0;
+    }
+
+    .attendance-report__title {
+        font-size: 26px;
+    }
+
+    .attendance-report__sub-title {
+        font-size: 18px;
+    }
+
+    .attendance-report__summary {
+        gap: 16px;
+    }
+
+    .attendance-report__card {
+        width: calc((100% - 32px) / 3);
+        padding: 14px;
+    }
+
+    .attendance-report__result {
+        font-size: 24px;
+    }
+
+    .attendance-report__header,
+    .attendance-report__item {
+        font-size: 15px;
+    }
+}

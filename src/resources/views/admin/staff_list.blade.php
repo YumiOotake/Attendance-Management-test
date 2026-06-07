@@ -3,10 +3,9 @@
     <link rel="stylesheet" href="{{ asset('css/list.css') }}">
 @endsection
 @section('content')
-    <div class="attendance__list">
-        <div class="attendance__inner">
-            <h1 class="attendance__title">スタッフ一覧</h1>
-
+    <div class="l-inner">
+        <h1 class="attendance__title">スタッフ一覧</h1>
+        <div class="attendance__list">
             <table class="attendance__table">
                 <thead class="attendance__thead">
                     <tr class="attendance__row">

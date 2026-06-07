@@ -5,8 +5,8 @@
 @section('content')
     <div class="attendance">
         <div class="attendance__inner">
-            <div class="attendance__status">
-                <p class="attendance__badge">
+            <div class="attendance__panel">
+                <p class="attendance__status">
                     @switch($attendance->status ?? 'none')
                         @case('working')
                             出勤中
@@ -24,25 +24,25 @@
                             勤務外
                     @endswitch
                 </p>
-            </div>
-            <div class="attendance__clock">
                 <p class="attendance__date">{{ $now->isoFormat('YYYY年M月D日(ddd)') }}</p>
                 <p class="attendance__time">{{ $now->format('H:i') }}</p>
             </div>
             <div class="attendance__actions">
-
                 @switch($attendance->status ?? 'none')
                     @case('working')
-                        <form action="{{ route('attendance.clock-out', $attendance) }}" method="post" class="attendance__form">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="attendance__button">退勤</button>
-                        </form>
-                        <form action="{{ route('attendance.break-start', $attendance) }}" method="post" class="attendance__form">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="attendance__button attendance__button--break">休憩入</button>
-                        </form>
+                        <div class="attendance__buttons">
+                            <form action="{{ route('attendance.clock-out', $attendance) }}" method="post" class="attendance__form">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="attendance__button">退勤</button>
+                            </form>
+                            <form action="{{ route('attendance.break-start', $attendance) }}" method="post"
+                                class="attendance__form">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="attendance__button attendance__button--break">休憩入</button>
+                            </form>
+                        </div>
                     @break
 
                     @case('break')

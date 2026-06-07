@@ -3,10 +3,9 @@
     <link rel="stylesheet" href="{{ asset('css/list.css') }}">
 @endsection
 @section('content')
-    <div class="attendance__list">
-        <div class="attendance__inner">
-            <h1 class="attendance__title">{{ $targetDate->format('Y/n/j') }}の勤怠</h1>
-
+    <div class="l-inner">
+        <h1 class="attendance__title">{{ $targetDate->format('Y/n/j') }}の勤怠</h1>
+        <div class="attendance__list">
             <div class="attendance__month-navigation">
                 <a href="{{ route('admin.list', ['date' => $dateOffset - 1]) }}" class="attendance__button--previous">
                     <img src="{{ asset('storage/' . 'images/arrow.png') }}" alt="矢印画像" class="attendance__arrow-image">
@@ -26,7 +25,7 @@
             <table class="attendance__table">
                 <thead class="attendance__thead">
                     <tr class="attendance__row">
-                        <th class="attendance__header">名前</th>
+                        <th class="attendance__header attendance__header-width">名前</th>
                         <th class="attendance__header">出勤</th>
                         <th class="attendance__header">退勤</th>
                         <th class="attendance__header">休憩</th>

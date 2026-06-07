@@ -3,10 +3,9 @@
     <link rel="stylesheet" href="{{ asset('css/list.css') }}">
 @endsection
 @section('content')
-    <div class="attendance__list">
-        <div class="attendance__inner">
-            <h1 class="attendance__title">勤怠一覧</h1>
-
+    <div class="l-inner">
+        <h1 class="attendance__title">勤怠一覧</h1>
+        <div class="attendance__list">
             <div class="attendance__month-navigation">
                 <a href="{{ route('attendance.list', ['month' => $monthOffset - 1]) }}" class="attendance__button--previous">
                     <img src="{{ asset('storage/' . 'images/arrow.png') }}" alt="矢印画像" class="attendance__arrow-image">
@@ -26,12 +25,12 @@
             <table class="attendance__table">
                 <thead class="attendance__thead">
                     <tr class="attendance__row">
-                        <th class="attendance__header">日付</th>
+                        <th class="attendance__header attendance__header-width">日付</th>
                         <th class="attendance__header">出勤</th>
                         <th class="attendance__header">退勤</th>
                         <th class="attendance__header">休憩</th>
                         <th class="attendance__header">合計</th>
-                        <th class="attendance__header">詳細</th>
+                        <th class="attendance__header attendance__header-width">詳細</th>
                     </tr>
                 </thead>
                 <tbody class="attendance__tbody">

@@ -1,39 +1,48 @@
 @extends('layouts.app')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/request.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 @endsection
 @section('content')
-    <div class="request-form__wrapper">
-        <div class="attendance__inner">
-            <h1 class="attendance__title">勤怠詳細</h1>
-
-            <dl class="request-form__detail">
+    <div class="l-inner">
+        <h1 class="attendance__title">勤怠詳細</h1>
+        <div class="attendance__list">
+            <dl class="request-form">
                 <div class="request-form__group">
                     <dt class="request-form__label">名前</dt>
-                    <dd class="request-form__value">{{ $attendanceRequest->attendance->user->name }}</dd>
+                    <div class="request-form__field">
+                        <dd class="request-form__value">{{ $attendanceRequest->attendance->user->name }}</dd>
+                    </div>
                 </div>
                 <div class="request-form__group">
                     <dt class="request-form__label">日付</dt>
-                    <dd class="request-form__value">{{ $attendanceRequest->attendance->date->format('Y年') }}</dd>
-                    <dd class="request-form__value">{{ $attendanceRequest->attendance->date->format('n月j日') }}</dd>
+                    <div class="request-form__field request-form__field--time">
+                        <dd class="request-form__value">{{ $attendanceRequest->attendance->date->format('Y年') }}</dd>
+                        <dd class="request-form__value">{{ $attendanceRequest->attendance->date->format('n月j日') }}</dd>
+                    </div>
                 </div>
                 <div class="request-form__group">
                     <dt class="request-form__label">出勤・退勤</dt>
-                    <dd class="request-form__value">{{ $attendanceRequest->formatted_clock_in }}</dd>
-                    <span class="request-form__span">〜</span>
-                    <dd class="request-form__value">{{ $attendanceRequest->formatted_clock_out }}</dd>
+                    <div class="request-form__field request-form__field--time">
+                        <dd class="request-form__value">{{ $attendanceRequest->formatted_clock_in }}</dd>
+                        <span class="request-form__span">〜</span>
+                        <dd class="request-form__value">{{ $attendanceRequest->formatted_clock_out }}</dd>
+                    </div>
                 </div>
                 @foreach ($requestBreaks as $key => $requestBreak)
                     <div class="request-form__group">
                         <dt class="request-form__label">休憩{{ $key === 0 ? '' : $key + 1 }}</dt>
-                        <dd class="request-form__value">{{ $requestBreak?->formatted_break_start }}</dd>
-                        <span class="request-form__span">〜</span>
-                        <dd class="request-form__value">{{ $requestBreak?->formatted_break_end }}</dd>
+                        <div class="request-form__field request-form__field--time">
+                            <dd class="request-form__value">{{ $requestBreak?->formatted_break_start }}</dd>
+                            <span class="request-form__span">〜</span>
+                            <dd class="request-form__value">{{ $requestBreak?->formatted_break_end }}</dd>
+                        </div>
                     </div>
                 @endforeach
                 <div class="request-form__group">
                     <dt class="request-form__label">備考</dt>
-                    <dd class="request-form__value">{{ $attendanceRequest->note }}</dd>
+                    <div class="request-form__field">
+                        <dd class="request-form__value">{{ $attendanceRequest->note }}</dd>
+                    </div>
                 </div>
             </dl>
             @if ($isPending)

@@ -25,7 +25,7 @@
                         class="header__logo-img">
                 </a>
             </div>
-            @if (!Request::is('login') && !Request::is('register'))
+            @if (!Route::is('login') && !Route::is('register') && !Route::is('admin.login'))
                 <nav class="header__nav">
                     @if (auth()->check() && auth()->user()->admin_status)
                         <div class="header__nav-item">
