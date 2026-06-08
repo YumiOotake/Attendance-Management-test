@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AttendanceController extends Controller
 {
-    public function showAttendancePage()
+    /**
+     * 勤怠登録画面を表示
+     *
+     * @return View
+     */
+    public function showAttendancePage(): View
     {
         $now = Carbon::now();
 
@@ -19,7 +26,12 @@ class AttendanceController extends Controller
         return view('attendance.index', compact('now', 'attendance'));
     }
 
-    public function clockIn()
+    /**
+     * 出勤時刻を登録
+     *
+     * @return RedirectResponse
+     */
+    public function clockIn(): RedirectResponse
     {
         $now = Carbon::now();
 
@@ -46,7 +58,13 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.index');
     }
 
-    public function breakStart(Attendance $attendance)
+    /**
+     * 休憩開始時刻を登録
+     *
+     * @param  Attendance $attendance 勤怠モデル
+     * @return RedirectResponse
+     */
+    public function breakStart(Attendance $attendance): RedirectResponse
     {
         $breakTime = BreakTime::where('attendance_id', $attendance->id)
             ->where('break_end', null)
@@ -68,7 +86,13 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.index');
     }
 
-    public function breakEnd(Attendance $attendance)
+    /**
+     * 休憩終了時刻を登録
+     *
+     * @param  Attendance $attendance 勤怠モデル
+     * @return RedirectResponse
+     */
+    public function breakEnd(Attendance $attendance): RedirectResponse
     {
         $breakTime = BreakTime::where('attendance_id', $attendance->id)
             ->where('break_end', null)
@@ -89,7 +113,13 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.index');
     }
 
-    public function clockOut(Attendance $attendance)
+    /**
+     * 退勤時刻を登録
+     *
+     * @param  Attendance $attendance 勤怠モデル
+     * @return RedirectResponse
+     */
+    public function clockOut(Attendance $attendance): RedirectResponse
     {
         $breakTime = BreakTime::where('attendance_id', $attendance->id)
             ->where('break_end', null)

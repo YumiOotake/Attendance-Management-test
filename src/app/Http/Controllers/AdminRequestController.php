@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\AttendanceRequest;
 use App\Models\BreakTime;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class AdminRequestController extends Controller
 {
-    public function requestApproveShow($attendance_correct_request_id)
+    /**
+     * 修正申請承認画面を表示
+     *
+     * @param int $attendance_correct_request_id 勤怠申請レコード
+     * @return View
+     */
+    public function requestApproveShow($attendance_correct_request_id): View
     {
         $attendanceRequest = AttendanceRequest::where('id', $attendance_correct_request_id)->firstOrFail();
 
@@ -23,7 +31,13 @@ class AdminRequestController extends Controller
         ));
     }
 
-    public function requestApprove($attendance_correct_request_id)
+    /**
+     * 修正申請を実行
+     *
+     * @param int $attendance_correct_request_id 勤怠申請レコード
+     * @return RedirectResponse
+     */
+    public function requestApprove($attendance_correct_request_id): RedirectResponse
     {
         $attendanceRequest = AttendanceRequest::where('id', $attendance_correct_request_id)->firstOrFail();
 

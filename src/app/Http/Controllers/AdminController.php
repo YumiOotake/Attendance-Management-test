@@ -9,17 +9,31 @@ use App\Models\BreakTime;
 use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminController extends Controller
 {
-    public function showLoginForm()
+    /**
+     * 勤怠一覧画面を表示
+     *
+     * @return View
+     */
+    public function showLoginForm(): View
     {
         return view('admin.login');
     }
 
-    public function attendanceDetail($id, Request $request)
+    /**
+     * 勤怠詳細画面を表示
+     *
+     * @param int $id 勤怠レコード
+     * @param Request $request リクエスト（月オフセット: month）
+     * @return View
+     */
+    public function attendanceDetail(int $id, Request $request): View
     {
         $monthOffset = $request->query('month');
         $userId = $request->query('user_id');
@@ -63,7 +77,14 @@ class AdminController extends Controller
         ));
     }
 
-    public function attendanceRequest($id, AttendanceRequestStoreRequest $request)
+    /**
+     * 勤怠を修正
+     *
+     * @param int $id 勤怠申請レコード
+     * @param Request $request リクエスト（勤怠修正）
+     * @return RedirectResponse
+     */
+    public function attendanceRequest(int $id, AttendanceRequestStoreRequest $request): RedirectResponse
     {
         $clock_in = $request->requested_clock_in ? Carbon::createFromFormat('H:i', $request->requested_clock_in) : null;
         $clock_out = $request->requested_clock_out ? Carbon::createFromFormat('H:i', $request->requested_clock_out) : null;
@@ -78,7 +99,6 @@ class AdminController extends Controller
         $break_starts = $request->requested_break_start;
         $break_ends = $request->requested_break_end;
 
-        // 既存の休憩を削除してから作り直す
         $attendance->breakTimes()->delete();
 
         foreach ($break_starts as $key => $break_start) {
@@ -100,7 +120,13 @@ class AdminController extends Controller
         ]) : redirect()->route('admin.list');
     }
 
-    public function attendanceList(Request $request)
+    /**
+     * 勤怠一覧画面を表示
+     *
+     * @param Request $request リクエスト（日付）
+     * @return View
+     */
+    public function attendanceList(Request $request): View
     {
         $dateOffset = $request->query('date', 0);
         $targetDate = Carbon::now()->addDays($dateOffset);
@@ -112,7 +138,12 @@ class AdminController extends Controller
         return view('admin.attendance_list', compact('targetDate', 'dateOffset', 'attendances'));
     }
 
-    public function staffList()
+    /**
+     * スタッフ一覧画面を表示
+     *
+     * @return View
+     */
+    public function staffList(): View
     {
         $users = User::where('admin_status', '!=', true)
             ->get();
@@ -120,7 +151,14 @@ class AdminController extends Controller
         return view('admin.staff_list', compact('users'));
     }
 
-    public function staffAttendanceList($id, Request $request)
+    /**
+     * スタッフ別勤怠一覧画面を表示
+     *
+     * @param int $id 勤怠申請レコード
+     * @param Request $request リクエスト（月オフセット: month）
+     * @return View
+     */
+    public function staffAttendanceList(int $id, Request $request): View
     {
         $user = User::where('id', $id)->firstOrFail();
         $monthOffset = $request->query('month', 0);
@@ -142,7 +180,13 @@ class AdminController extends Controller
         return view('admin.attendance_staff', compact('targetMonth', 'monthOffset', 'dateLists', 'attendanceByDate', 'user'));
     }
 
-    public function export(Request $request)
+    /**
+     * CSV出力
+     *
+     * @param Request $request リクエスト（ユーザーID: id、月オフセット: month）
+     * @return StreamedResponse
+     */
+    public function export(Request $request): StreamedResponse
     {
         $user = User::where('id', $request->query('id'))->firstOrFail();
         $monthOffset = $request->query('month', 0);

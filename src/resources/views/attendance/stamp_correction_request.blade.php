@@ -8,9 +8,9 @@
         <div class="attendance__list">
             <div class="attendance__navigation">
                 <a href="{{ route('attendance.request.list', ['tab' => 'pending']) }}"
-                    class="attendance__tab {{ request('tab') === 'pending' ? 'attendance__tab--active' : '' }}">承認待ち</a>
+                    class="attendance__tab {{ request('tab', 'pending') === 'pending' ? 'attendance__tab--active' : '' }}">承認待ち</a>
                 <a href="{{ route('attendance.request.list', ['tab' => 'approved']) }}"
-                    class="attendance__tab {{ request('tab') === 'approved' ? 'attendance__tab--active' : '' }}">承認済み</a>
+                    class="attendance__tab {{ request('tab', 'pending') === 'approved' ? 'attendance__tab--active' : '' }}">承認済み</a>
             </div>
             <table class="attendance__table">
                 <thead class="attendance__thead">

@@ -8,11 +8,19 @@ use App\Models\AttendanceRequest;
 use App\Models\RequestBreakTime;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AttendanceDetailController extends Controller
 {
-    public function list(Request $request)
+    /**
+     * 勤怠一覧画面を表示
+     *
+     * @param Request $request リクエスト（月オフセット: month）
+     * @return View
+     */
+    public function list(Request $request): View
     {
         $user = auth()->user();
         $monthOffset = $request->query('month', 0);
@@ -24,14 +32,6 @@ class AttendanceDetailController extends Controller
 
         $dateLists = CarbonPeriod::create($startOfMonth, $endOfMonth);
 
-        // $attendanceByDate = [];
-        // foreach ($dateLists as $dateList) {
-        //     $attendance = Attendance::where('user_id', $user->id)
-        //         ->where('date', $dateList->format('Y-m-d'))
-        //         ->first();
-
-        //     $attendanceByDate[$dateList->format('Y-m-d')] = $attendance;
-        // }
         $attendanceByDate = Attendance::where('user_id', $user->id)
             ->whereBetween('date', [$startOfMonth, $endOfMonth])
             ->get()
@@ -40,7 +40,13 @@ class AttendanceDetailController extends Controller
         return view('attendance.list', compact('targetMonth', 'monthOffset', 'dateLists', 'attendanceByDate'));
     }
 
-    public function requestList(Request $request)
+    /**
+     * 申請一覧画面を表示
+     *
+     * @param Request $request リクエスト（tab）
+     * @return View
+     */
+    public function requestList(Request $request): View
     {
         $tab = $request->query('tab');
         $user = auth()->user();
@@ -73,7 +79,14 @@ class AttendanceDetailController extends Controller
         return view('attendance.stamp_correction_request', compact('attendanceRequests'));
     }
 
-    public function show($id, Request $request)
+    /**
+     * 勤怠詳細画面を表示
+     *
+     * @param int $id 勤怠レコード
+     * @param Request $request リクエスト（日付）
+     * @return View
+     */
+    public function show(int $id, Request $request): View
     {
         if ($id == 0 && !empty($request->date)) {
             $attendance = new Attendance([
@@ -106,7 +119,14 @@ class AttendanceDetailController extends Controller
         ));
     }
 
-    public function request($id, AttendanceRequestStoreRequest $request)
+    /**
+     * 勤怠修正の申請
+     *
+     * @param int $id 勤怠レコード
+     * @param Request $request リクエスト（修正時刻）
+     * @return RedirectResponse
+     */
+    public function request(int $id, AttendanceRequestStoreRequest $request): RedirectResponse
     {
         $user = auth()->user();
 
@@ -158,6 +178,7 @@ class AttendanceDetailController extends Controller
                 'requested_break_end' => $break_end,
             ]);
         }
+
         return redirect()->route('attendance.request.list');
     }
 }

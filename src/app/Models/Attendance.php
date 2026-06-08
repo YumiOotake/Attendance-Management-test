@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Attendance extends Model
 {
@@ -22,17 +24,17 @@ class Attendance extends Model
         'date' => 'date',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function attendanceRequests()
+    public function attendanceRequests(): HasMany
     {
         return $this->hasMany(AttendanceRequest::class);
     }
 
-    public function breakTimes()
+    public function breakTimes(): HasMany
     {
         return $this->hasMany(BreakTime::class);
     }
@@ -45,17 +47,17 @@ class Attendance extends Model
         return 'none';
     }
 
-    public function getFormattedClockInAttribute()
+    public function getFormattedClockInAttribute(): string|null
     {
         return $this->clock_in ? substr($this->clock_in, 0, 5) : null;
     }
 
-    public function getFormattedClockOutAttribute()
+    public function getFormattedClockOutAttribute(): string|null
     {
         return $this->clock_out ? substr($this->clock_out, 0, 5) : null;
     }
 
-    public function getTotalBreakTimeAttribute()
+    public function getTotalBreakTimeAttribute(): string
     {
         $totalMinutes = 0;
 
@@ -71,7 +73,7 @@ class Attendance extends Model
         return sprintf('%d:%02d', $hours, $minutes);
     }
 
-    public function getTotalWorkTimeAttribute()
+    public function getTotalWorkTimeAttribute(): string
     {
         $totalBreakMinutes = 0;
         $totalMinutes = 0;

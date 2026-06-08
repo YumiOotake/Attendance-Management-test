@@ -17,9 +17,9 @@ class AttendanceRequestPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -29,9 +29,9 @@ class AttendanceRequestPolicy
      * @param  \App\Models\AttendanceRequest  $attendanceRequest
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, AttendanceRequest $attendanceRequest)
+    public function view(User $user, AttendanceRequest $attendanceRequest): bool
     {
-        // return $user->id === $attendanceRequest->user_id;
+        return false;
     }
 
     /**
@@ -40,7 +40,7 @@ class AttendanceRequestPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user, Attendance $attendance)
+    public function create(User $user, Attendance $attendance): bool
     {
         return $user->id === $attendance->user_id;
     }
@@ -52,9 +52,9 @@ class AttendanceRequestPolicy
      * @param  \App\Models\AttendanceRequest  $attendanceRequest
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, AttendanceRequest $attendanceRequest)
+    public function update(User $user, AttendanceRequest $attendanceRequest): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -64,9 +64,9 @@ class AttendanceRequestPolicy
      * @param  \App\Models\AttendanceRequest  $attendanceRequest
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, AttendanceRequest $attendanceRequest)
+    public function delete(User $user, AttendanceRequest $attendanceRequest): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -76,9 +76,9 @@ class AttendanceRequestPolicy
      * @param  \App\Models\AttendanceRequest  $attendanceRequest
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, AttendanceRequest $attendanceRequest)
+    public function restore(User $user, AttendanceRequest $attendanceRequest): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -88,8 +88,8 @@ class AttendanceRequestPolicy
      * @param  \App\Models\AttendanceRequest  $attendanceRequest
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, AttendanceRequest $attendanceRequest)
+    public function forceDelete(User $user, AttendanceRequest $attendanceRequest): bool
     {
-        //
+        return false;
     }
 }

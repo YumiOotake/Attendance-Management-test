@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BreakTime extends Model
 {
@@ -19,17 +20,17 @@ class BreakTime extends Model
         'attendance_id' => 'integer',
     ];
 
-    public function attendance()
+    public function attendance(): BelongsTo
     {
         return $this->belongsTo(Attendance::class);
     }
 
-    public function getFormattedBreakStartAttribute()
+    public function getFormattedBreakStartAttribute(): string|null
     {
         return $this->break_start ? substr($this->break_start, 0, 5) : null;
     }
 
-    public function getFormattedBreakEndAttribute()
+    public function getFormattedBreakEndAttribute(): string|null
     {
         return $this->break_end ? substr($this->break_end, 0, 5) : null;
     }

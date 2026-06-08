@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AttendanceRequest extends Model
 {
@@ -23,17 +25,17 @@ class AttendanceRequest extends Model
         'user_id' => 'integer',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function attendance()
+    public function attendance(): BelongsTo
     {
         return $this->belongsTo(Attendance::class);
     }
 
-    public function requestBreakTimes()
+    public function requestBreakTimes(): HasMany
     {
         return $this->hasMany(RequestBreakTime::class);
     }
@@ -47,12 +49,12 @@ class AttendanceRequest extends Model
         };
     }
 
-    public function getFormattedClockInAttribute()
+    public function getFormattedClockInAttribute(): string|null
     {
         return $this->requested_clock_in ? substr($this->requested_clock_in, 0, 5) : null;
     }
 
-    public function getFormattedClockOutAttribute()
+    public function getFormattedClockOutAttribute(): string|null
     {
         return $this->requested_clock_out ? substr($this->requested_clock_out, 0, 5) : null;
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Override;
 
 class AttendanceRequestStoreRequest extends FormRequest
 {
@@ -12,7 +11,7 @@ class AttendanceRequestStoreRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,7 +21,7 @@ class AttendanceRequestStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'requested_clock_in' => 'date_format:H:i|before:requested_clock_out',
@@ -33,7 +32,7 @@ class AttendanceRequestStoreRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
         $validator->after(function ($validator) {
             $breakStarts = $this->requested_break_start ?? [];
@@ -68,7 +67,7 @@ class AttendanceRequestStoreRequest extends FormRequest
         });
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'requested_clock_in.date_format' => '時刻は「09:00」の形式で入力してください',
