@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\AttendanceRequest;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class AttendancePolicy
+class AttendanceRecordPolicy
 {
     use HandlesAuthorization;
 
@@ -23,11 +23,11 @@ class AttendancePolicy
     }
 
     /**
-     * Determine whether the user can view the model.
+     * 勤怠詳細の閲覧権限を確認する
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Attendance  $attendance
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param  User  $user 認証ユーザー
+     * @param  Attendance  $attendance 勤怠レコード
+     * @return bool
      */
     public function view(User $user, Attendance $attendance): bool
     {
@@ -46,11 +46,11 @@ class AttendancePolicy
     }
 
     /**
-     * Determine whether the user can update the model.
+     * 勤怠の編集権限を確認する
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Attendance  $attendance
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param  User  $user 認証ユーザー
+     * @param  Attendance  $attendance 勤怠レコード
+     * @return bool
      */
     public function update(User $user, Attendance $attendance): bool
     {
@@ -66,7 +66,7 @@ class AttendancePolicy
      */
     public function delete(User $user, Attendance $attendance): bool
     {
-        return false;
+        return $user->id === $attendance->user_id;
     }
 
     /**
@@ -91,5 +91,13 @@ class AttendancePolicy
     public function forceDelete(User $user, Attendance $attendance): bool
     {
         return false;
+    }
+
+    public function before(User $user, string $ability): bool|null
+    {
+        if ($user->admin_status) {
+            return true;
+        }
+        return null;
     }
 }

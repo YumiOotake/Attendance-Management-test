@@ -47,9 +47,9 @@
                             <td class="attendance__item">
                                 {{ $attendance->formatted_clock_out ?? '' }}</td>
                             <td class="attendance__item">
-                                {{ $attendance->total_break_time ?? '' }}</td>
+                                {{ $attendance->formatted_total_break_time ?? '' }}</td>
                             <td class="attendance__item">
-                                {{ $attendance->total_work_time ?? '' }}</td>
+                                {{ $attendance->formatted_total_work_time ?? '' }}</td>
                             <td class="attendance__item">
                                 <a href="{{ route('admin.detail', $attendance->id ?? 0) }}?date={{ $dateList->format('Y-m-d') }}&user_id={{ $user->id }}&from=staff&month={{ $monthOffset }}"
                                     class="attendance__detail">詳細</a>

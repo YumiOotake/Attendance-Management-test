@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class AttendanceRequestStoreRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * このリクエストを実行する権限があるか判定する
      *
      * @return bool
      */
@@ -17,7 +17,7 @@ class AttendanceRequestStoreRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * このリクエストに適用するバリデーションルールを取得する
      *
      * @return array
      */
@@ -32,6 +32,11 @@ class AttendanceRequestStoreRequest extends FormRequest
         ];
     }
 
+    /**
+     * このリクエストに適用するバリデーションルールとメッセージを取得する
+     *
+     * @return array
+     */
     public function withValidator($validator): void
     {
         $validator->after(function ($validator) {
@@ -67,6 +72,11 @@ class AttendanceRequestStoreRequest extends FormRequest
         });
     }
 
+    /**
+     * このリクエストに適用するエラーメッセージ
+     *
+     * @return array
+     */
     public function messages(): array
     {
         return [

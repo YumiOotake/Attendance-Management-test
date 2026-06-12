@@ -20,6 +20,7 @@ class CreateAttendancesTable extends Migration
             $table->unique(['user_id', 'date']);
             $table->time('clock_in')->nullable();
             $table->time('clock_out')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

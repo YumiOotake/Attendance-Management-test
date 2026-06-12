@@ -17,6 +17,7 @@ class Attendance extends Model
         'date',
         'clock_in',
         'clock_out',
+        'comment',
     ];
 
     protected $casts = [
@@ -57,7 +58,7 @@ class Attendance extends Model
         return $this->clock_out ? substr($this->clock_out, 0, 5) : null;
     }
 
-    public function getTotalBreakTimeAttribute(): string
+    public function getFormattedTotalBreakTimeAttribute(): string
     {
         $totalMinutes = 0;
 
@@ -73,7 +74,7 @@ class Attendance extends Model
         return sprintf('%d:%02d', $hours, $minutes);
     }
 
-    public function getTotalWorkTimeAttribute(): string
+    public function getFormattedTotalWorkTimeAttribute(): string
     {
         $totalBreakMinutes = 0;
         $totalMinutes = 0;
@@ -97,20 +98,6 @@ class Attendance extends Model
         return sprintf('%d:%02d', $hours, $minutes);
     }
 
-    public function getTotalBreakMinute(): int
-    {
-        $totalMinutes = 0;
-
-        foreach ($this->breakTimes as $break) {
-            if ($break->break_start && $break->break_end) {
-                $totalMinutes += Carbon::parse($break->break_end)
-                    ->diffInMinutes(Carbon::parse($break->break_start));
-            }
-        }
-
-        return $totalMinutes;
-    }
-
     public function getTotalWorkMinutes(): int
     {
         $totalBreakMinutes = 0;
@@ -130,5 +117,45 @@ class Attendance extends Model
         $totalWorkMinutes = $totalMinutes - $totalBreakMinutes;
 
         return $totalWorkMinutes;
+    }
+
+    public function getTotalBreakTimeAttribute(): string
+    {
+        $totalMinutes = 0;
+
+        foreach ($this->breakTimes as $break) {
+            if ($break->break_start && $break->break_end) {
+                $totalMinutes += Carbon::parse($break->break_end)
+                    ->diffInMinutes(Carbon::parse($break->break_start));
+            }
+        }
+        $hours = intdiv($totalMinutes, 60);
+        $minutes = $totalMinutes % 60;
+
+        return sprintf('%02d:%02d', $hours, $minutes);
+    }
+
+    public function getTotalTimeAttribute(): string
+    {
+        $totalBreakMinutes = 0;
+        $totalMinutes = 0;
+
+        foreach ($this->breakTimes as $break) {
+            if ($break->break_start && $break->break_end) {
+                $totalBreakMinutes += Carbon::parse($break->break_end)
+                    ->diffInMinutes(Carbon::parse($break->break_start));
+            }
+        }
+        if ($this->clock_in && $this->clock_out) {
+            $totalMinutes += Carbon::parse($this->clock_in)
+                ->diffInMinutes(Carbon::parse($this->clock_out));
+        }
+
+        $totalWorkMinutes = $totalMinutes - $totalBreakMinutes;
+
+        $hours = intdiv($totalWorkMinutes, 60);
+        $minutes = $totalWorkMinutes % 60;
+
+        return sprintf('%02d:%02d', $hours, $minutes);
     }
 }

@@ -39,8 +39,8 @@
                             <td class="attendance__item">{{ $attendance->user->name }}</td>
                             <td class="attendance__item">{{ $attendance->formatted_clock_in }}</td>
                             <td class="attendance__item">{{ $attendance->formatted_clock_out }}</td>
-                            <td class="attendance__item">{{ $attendance->total_break_time }}</td>
-                            <td class="attendance__item">{{ $attendance->total_work_time }}</td>
+                            <td class="attendance__item">{{ $attendance->formatted_total_break_time }}</td>
+                            <td class="attendance__item">{{ $attendance->formatted_total_work_time }}</td>
                             <td class="attendance__item">
                                 <a href="{{ route('admin.detail', $attendance) }}" class="attendance__detail">詳細</a>
                             </td>
