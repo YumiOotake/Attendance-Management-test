@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class LoginRequest extends FortifyLoginRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * このリクエストを実行する権限があるか判定する
      *
      * @return bool
      */
@@ -18,7 +18,7 @@ class LoginRequest extends FortifyLoginRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * このリクエストに適用するバリデーションルールを取得する
      *
      * @return array
      */
@@ -30,6 +30,11 @@ class LoginRequest extends FortifyLoginRequest
         ];
     }
 
+    /**
+     * このリクエストに適用するバリデーションメッセージを取得する
+     *
+     * @return array
+     */
     public function messages(): array
     {
         return [

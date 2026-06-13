@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class RegisterRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * このリクエストを実行する権限があるか判定する
      *
      * @return bool
      */
@@ -17,7 +17,7 @@ class RegisterRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * このリクエストに適用するバリデーションルールを取得する
      *
      * @return array
      */
@@ -31,6 +31,11 @@ class RegisterRequest extends FormRequest
         ];
     }
 
+    /**
+     * このリクエストに適用するバリデーションメッセージを取得する
+     *
+     * @return array
+     */
     public function messages(): array
     {
         return [

@@ -39,7 +39,7 @@ class UpdateAttendanceRecordRequest extends FormRequest
     }
 
     /**
-     * このリクエストに適用するエラーメッセージ
+     * このリクエストに適用するバリデーションメッセージを取得する
      *
      * @return array
      */
