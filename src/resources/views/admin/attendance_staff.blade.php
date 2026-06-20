@@ -15,7 +15,7 @@
                 <div class="attendance__date">
                     <img src="{{ asset('storage/' . 'images/calendar.png') }}" alt="カレンダー画像"
                         class="attendance__calendar-image">
-                    <p class="attendance__current-date">{{ $targetMonth->format('Y/m/d') }}</p>
+                    <p class="attendance__current-date">{{ $targetMonth->format('Y/m') }}</p>
                 </div>
                 <a href="{{ route('admin.attendance.staff', ['id' => $user->id, 'month' => $monthOffset + 1]) }}"
                     class="attendance__button--next">

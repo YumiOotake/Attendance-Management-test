@@ -176,6 +176,4 @@ class AttendanceRecordController extends Controller
 
         return "{$hours}h {$minutes}m";
     }
-
-    
 }

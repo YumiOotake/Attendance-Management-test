@@ -16,6 +16,11 @@ use Illuminate\Support\Collection;
 
 class AttendanceRecordController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->only(['store', 'update', 'destroy']);
+    }
+
     /**
      * 勤怠一覧を取得する
      *

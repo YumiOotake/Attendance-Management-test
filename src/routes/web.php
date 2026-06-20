@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminRequestController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceDetailController;
 use App\Http\Controllers\AttendanceRecordController;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,9 +33,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware(['guest'])
+    ->name('login.store');
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
-
     Route::get('/admin/attendance/list', [AdminController::class, 'attendanceList'])->name('admin.list');
     Route::get('/admin/attendance/{id}', [AdminController::class, 'attendanceDetail'])->name('admin.detail');
     Route::patch('/admin/attendance/{id}', [AdminController::class, 'attendanceRequest'])->name('admin.request');
@@ -44,3 +47,4 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::patch('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestController::class, 'requestApprove'])->name('admin.request.approve');
     Route::get('/export', [AdminController::class, 'export'])->name('export');
 });
+

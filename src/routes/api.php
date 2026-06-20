@@ -21,11 +21,6 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('attendance-records', AttendanceRecordController::class)
         ->parameters([
             'attendance-records' => 'attendanceRecord',
-        ])
-        ->middleware([
-            'store' => 'auth:sanctum',
-            'update' => 'auth:sanctum',
-            'destroy' => 'auth:sanctum',
         ]);
 });
 

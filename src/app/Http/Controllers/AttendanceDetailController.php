@@ -25,7 +25,7 @@ class AttendanceDetailController extends Controller
         $user = auth()->user();
         $monthOffset = $request->query('month', 0);
 
-        $targetMonth = Carbon::now()->addMonths($monthOffset);
+        $targetMonth = Carbon::now()->addMonthNoOverflow($monthOffset);
 
         $startOfMonth = $targetMonth->copy()->startOfMonth();
         $endOfMonth = $targetMonth->copy()->endOfMonth();

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class AdminController extends Controller
 {
     /**
-     * 勤怠一覧画面を表示
+     * 管理者ログイン画面を表示
      *
      * @return View
      */
@@ -131,7 +131,7 @@ class AdminController extends Controller
         $dateOffset = $request->query('date', 0);
         $targetDate = Carbon::now()->addDays($dateOffset);
 
-        $attendances = Attendance::where('date', $targetDate->format('Y-m-d'))
+        $attendances = Attendance::whereDate('date', $targetDate->format('Y-m-d'))
             ->with(['user', 'breakTimes'])
             ->get();
 
@@ -163,7 +163,7 @@ class AdminController extends Controller
         $user = User::where('id', $id)->firstOrFail();
         $monthOffset = $request->query('month', 0);
 
-        $targetMonth = Carbon::now()->addMonths($monthOffset);
+        $targetMonth = Carbon::now()->addMonthsNoOverflow($monthOffset);
 
         $startOfMonth = $targetMonth->copy()->startOfMonth();
         $endOfMonth = $targetMonth->copy()->endOfMonth();
@@ -191,7 +191,7 @@ class AdminController extends Controller
         $user = User::where('id', $request->query('id'))->firstOrFail();
         $monthOffset = $request->query('month', 0);
 
-        $targetMonth = Carbon::now()->addMonths($monthOffset);
+        $targetMonth = Carbon::now()->addMonthsNoOverflow($monthOffset);
 
         $startOfMonth = $targetMonth->copy()->startOfMonth();
         $endOfMonth = $targetMonth->copy()->endOfMonth();
