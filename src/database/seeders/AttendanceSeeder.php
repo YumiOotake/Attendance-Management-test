@@ -30,7 +30,6 @@ class AttendanceSeeder extends Seeder
         $allSchedule = collect();
 
         // user1当月だけパターンあり17日
-
         $schedule = $this->buildMonthlySchedule($patterns, 0, 17, 1);
         foreach ($schedule as $date => $pattern) {
             $allSchedule->put($date . '_1', array_merge($pattern, ['user_id' => 1, 'date' => $date]));
@@ -44,7 +43,7 @@ class AttendanceSeeder extends Seeder
             }
         }
 
-        // user2,3は全6ヶ月通常15日
+        // user2,3は全5ヶ月通常15日
         foreach ([2, 3] as $userId) {
             for ($i = 1; $i <= 5; $i++) {
                 $schedule = $this->buildMonthlySchedule($normalPatterns, $i, 15, $userId);

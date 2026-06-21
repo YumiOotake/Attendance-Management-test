@@ -165,7 +165,7 @@
                     </div>
                 </form>
                 <div class="request-form__button">
-                    <button class="request-form__submit" type="submit">修正</button>
+                    <button class="request-form__submit" type="submit"  form="attendance-request-form">修正</button>
                 </div>
             @endif
         </div>

@@ -162,7 +162,7 @@ class AttendanceApiTest extends TestCase
             'comment' => null
         ];
 
-        $response = $this->actingAs($user, 'sanctum')->patchJson('/api/v1/attendance-records/' . $attendance->id, $attendanceData);
+        $response = $this->actingAs($user, 'sanctum')->putJson('/api/v1/attendance-records/' . $attendance->id, $attendanceData);
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('attendances', [
@@ -175,7 +175,7 @@ class AttendanceApiTest extends TestCase
             'clock_out' => '18:00:00',
         ]);
 
-        $response = $this->actingAs($user, 'sanctum')->patchJson('/api/v1/attendance-records/' . 9999, $attendanceData);
+        $response = $this->actingAs($user, 'sanctum')->putJson('/api/v1/attendance-records/' . 9999, $attendanceData);
 
         $response->assertStatus(404);
         $response->assertJson([
