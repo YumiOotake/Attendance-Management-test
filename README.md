@@ -21,11 +21,6 @@ DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 ```
 
-3. migrate、ダミーデータ作成
-```
-make fresh
-```
-
 ## メール認証設定（Mailtrap）
 
 1. [Mailtrap](https://mailtrap.io)にアクセスしてアカウント登録
@@ -134,8 +129,15 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ## URL
 
-・開発環境：http://localhost/attendance
+・開発環境トップ：http://localhost/attendance
+・一般ユーザーログイン：http://localhost/login
+・管理者ログイン：http://localhost/admin/login
 ・phpMyAdmin：http://localhost:8080/
+
+ユーザー情報
+・ユーザー1（一般）: user1@example.com / password / メール認証済み
+・ユーザー2（一般）: user2@example.com / password / メール認証済み
+・ユーザー3（管理者）: user3@example.com / password / メール認証済み
 
 ## API動作確認（Postman）
 
@@ -147,7 +149,7 @@ POST http://localhost/api/login
 Body（raw / JSON）
 ```json
 {
-    "email": "user1@example.com",
+    "email": "user2@example.com",
     "password": "password"
 }
 ```

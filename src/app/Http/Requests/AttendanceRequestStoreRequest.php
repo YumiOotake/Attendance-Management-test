@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class AttendanceRequestStoreRequest extends FormRequest
 {
@@ -35,9 +36,10 @@ class AttendanceRequestStoreRequest extends FormRequest
     /**
      * このリクエストに適用するバリデーションルールとメッセージを取得する
      *
-     * @return array
+     * @param Validator $validator バリデーターインスタンス
+     * @return void
      */
-    public function withValidator($validator): void
+    public function withValidator(Validator $validator): void
     {
         $validator->after(function ($validator) {
             $breakStarts = $this->requested_break_start ?? [];

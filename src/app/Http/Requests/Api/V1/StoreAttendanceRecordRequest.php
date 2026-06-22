@@ -4,7 +4,6 @@ namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use Override;
 
 class StoreAttendanceRecordRequest extends FormRequest
 {

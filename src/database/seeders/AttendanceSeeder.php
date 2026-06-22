@@ -53,7 +53,6 @@ class AttendanceSeeder extends Seeder
             }
         }
 
-        // 古い順にソートしてinsert
         foreach ($allSchedule->sortBy('date') as $data) {
             Attendance::factory()->create([
                 'user_id' => $data['user_id'],

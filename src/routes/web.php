@@ -28,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/attendance/list', [AttendanceDetailController::class, 'list'])->name('attendance.list');
     Route::get('/attendance/detail/{id}', [AttendanceDetailController::class, 'show'])->name('attendance.show');
     Route::post('/attendance/detail/{id}', [AttendanceDetailController::class, 'request'])->name('attendance.request');
-    Route::get('/stamp_correction_request/list', [AttendanceDetailController::class, 'requestList'])->name('attendance.request.list');//2ルート分
+    Route::get('/stamp_correction_request/list', [AttendanceDetailController::class, 'requestList'])->name('attendance.request.list');
     Route::get('/attendance/report', [AttendanceRecordController::class, 'index'])->name('attendance.report');
 });
 

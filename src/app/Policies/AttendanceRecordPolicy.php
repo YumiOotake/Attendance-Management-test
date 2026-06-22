@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Attendance;
 use App\Models\User;
-use App\Models\AttendanceRequest;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AttendanceRecordPolicy

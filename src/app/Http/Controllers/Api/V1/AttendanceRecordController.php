@@ -7,12 +7,9 @@ use App\Http\Requests\Api\V1\IndexAttendanceRecordRequest;
 use App\Http\Requests\Api\V1\StoreAttendanceRecordRequest;
 use App\Http\Requests\Api\V1\UpdateAttendanceRecordRequest;
 use App\Http\Resources\AttendanceRecordResource;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Attendance;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Collection;
 
 class AttendanceRecordController extends Controller
 {
@@ -24,7 +21,7 @@ class AttendanceRecordController extends Controller
     /**
      * 勤怠一覧を取得する
      *
-     * @param Request $request
+     * @param IndexAttendanceRecordRequest $request
      * @return AnonymousResourceCollection 勤怠コレクション
      */
     public function index(IndexAttendanceRecordRequest $request): AnonymousResourceCollection

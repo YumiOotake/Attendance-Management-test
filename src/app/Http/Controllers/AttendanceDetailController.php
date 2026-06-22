@@ -34,6 +34,7 @@ class AttendanceDetailController extends Controller
 
         $attendanceByDate = Attendance::where('user_id', $user->id)
             ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->with('breakTimes')
             ->get()
             ->keyBy(fn($a) => $a->date->format('Y-m-d'));
 

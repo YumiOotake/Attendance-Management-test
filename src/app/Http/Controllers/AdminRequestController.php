@@ -16,7 +16,7 @@ class AdminRequestController extends Controller
      * @param int $attendance_correct_request_id 勤怠申請レコード
      * @return View
      */
-    public function requestApproveShow($attendance_correct_request_id): View
+    public function requestApproveShow(int $attendance_correct_request_id): View
     {
         $attendanceRequest = AttendanceRequest::where('id', $attendance_correct_request_id)->firstOrFail();
 
@@ -37,7 +37,7 @@ class AdminRequestController extends Controller
      * @param int $attendance_correct_request_id 勤怠申請レコード
      * @return RedirectResponse
      */
-    public function requestApprove($attendance_correct_request_id): RedirectResponse
+    public function requestApprove(int $attendance_correct_request_id): RedirectResponse
     {
         $attendanceRequest = AttendanceRequest::where('id', $attendance_correct_request_id)->firstOrFail();
 
