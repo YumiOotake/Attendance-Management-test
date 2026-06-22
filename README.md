@@ -11,7 +11,7 @@ Dockerビルド
 make init
 ```
 
-.envファイル作成後、以下を編集：
+3.  .envファイル作成後、以下を編集：
 ```
 DB_CONNECTION=mysql
 DB_HOST=mysql
@@ -19,6 +19,12 @@ DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
+```
+
+4.  DBのマイグレーションとシーダーを実行する
+
+```
+make fresh
 ```
 
 ## メール認証設定（Mailtrap）
@@ -120,8 +126,10 @@ MAIL_FROM_NAME="${APP_NAME}"
 ![ER図](./docs/er.drawio.png)
 
 ## 追加エラーメッセージ
+
 ログイン
 - メールアドレスはメール形式で入力してください
+
 勤怠詳細を確認/申請
 - 時刻は「09:00」の形式で入力してください
 - 備考は文字列で記入してください
