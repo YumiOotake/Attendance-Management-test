@@ -121,23 +121,24 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ## 追加エラーメッセージ
 ログイン
-　メールアドレスはメール形式で入力してください
+- メールアドレスはメール形式で入力してください
 勤怠詳細を確認/申請
-　時刻は「09:00」の形式で入力してください
-　備考は文字列で記入してください
-　備考は255文字以内で記入してください
+- 時刻は「09:00」の形式で入力してください
+- 備考は文字列で記入してください
+- 備考は255文字以内で記入してください
 
 ## URL
 
-・開発環境トップ：http://localhost/attendance
-・一般ユーザーログイン：http://localhost/login
-・管理者ログイン：http://localhost/admin/login
-・phpMyAdmin：http://localhost:8080/
+- 開発環境トップ：http://localhost/attendance
+- 一般ユーザーログイン：http://localhost/login
+- 管理者ログイン：http://localhost/admin/login
+- phpMyAdmin：http://localhost:8080/
 
-ユーザー情報
-・ユーザー1（一般）: user1@example.com / password / メール認証済み
-・ユーザー2（一般）: user2@example.com / password / メール認証済み
-・ユーザー3（管理者）: user3@example.com / password / メール認証済み
+## ユーザー情報
+
+- ユーザー1（一般）: user1@example.com / password / メール認証済み
+- ユーザー2（一般）: user2@example.com / password / メール認証済み
+- ユーザー3（管理者）: user3@example.com / password / メール認証済み
 
 ## API動作確認（Postman）
 
