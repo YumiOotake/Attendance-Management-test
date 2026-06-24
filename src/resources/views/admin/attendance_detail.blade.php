@@ -128,11 +128,11 @@
                             class="request-form__label">休憩{{ count($breaks) === 1 ? '2' : count($breaks) + 1 }}</label>
                         <div class="request-form__field request-form__field--time">
                             <div class="request-form__break_start">
-                                <input type="text" id="requested_break_start[]" name="requested_break_start[]"
+                                <input type="text" id="requested_break_start" name="requested_break_start[]"
                                     value="{{ old('requested_break_start.' . count($breaks)) }}"
                                     class="request-form__input">
                                 <div class="request-form__error">
-                                    @error('requested_break_start')
+                                    @error('requested_break_start.' . count($breaks))
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -142,7 +142,7 @@
                                 <input type="text" name="requested_break_end[]"
                                     value="{{ old('requested_break_end.' . count($breaks)) }}" class="request-form__input">
                                 <div class="request-form__error">
-                                    @error('requested_break_start')
+                                    @error('requested_break_end.' . count($breaks))
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -165,7 +165,7 @@
                     </div>
                 </form>
                 <div class="request-form__button">
-                    <button class="request-form__submit" type="submit"  form="attendance-request-form">修正</button>
+                    <button class="request-form__submit" type="submit" form="attendance-request-form">修正</button>
                 </div>
             @endif
         </div>

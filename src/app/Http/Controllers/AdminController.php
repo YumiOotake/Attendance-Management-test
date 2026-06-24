@@ -86,29 +86,29 @@ class AdminController extends Controller
      */
     public function attendanceRequest(int $id, AttendanceRequestStoreRequest $request): RedirectResponse
     {
-        $clock_in = $request->requested_clock_in ? Carbon::createFromFormat('H:i', $request->requested_clock_in) : null;
-        $clock_out = $request->requested_clock_out ? Carbon::createFromFormat('H:i', $request->requested_clock_out) : null;
+        $clockIn = $request->requested_clock_in ? Carbon::createFromFormat('H:i', $request->requested_clock_in) : null;
+        $clockOut = $request->requested_clock_out ? Carbon::createFromFormat('H:i', $request->requested_clock_out) : null;
 
         $userId = $request->query('user_id');
 
         $attendance = Attendance::updateOrCreate(
             ['user_id' => $userId, 'date' => $request->date],
-            ['clock_in' => $clock_in, 'clock_out' => $clock_out]
+            ['clock_in' => $clockIn, 'clock_out' => $clockOut]
         );
 
-        $break_starts = $request->requested_break_start;
-        $break_ends = $request->requested_break_end;
+        $breakStarts = $request->requested_break_start ?? [];
+        $breakEnds = $request->requested_break_end ?? [];
 
         $attendance->breakTimes()->delete();
 
-        foreach ($break_starts as $key => $break_start) {
-            if (empty($break_start) && empty($break_ends[$key])) {
+        foreach ($breakStarts as $key => $breakStart) {
+            if (empty($breakStart) && empty($breakEnds[$key])) {
                 continue;
             }
             BreakTime::create([
                 'attendance_id' => $attendance->id,
-                'break_start' => Carbon::createFromFormat('H:i', $break_start),
-                'break_end' => Carbon::createFromFormat('H:i', $break_ends[$key]),
+                'break_start' => Carbon::createFromFormat('H:i', $breakStart),
+                'break_end' => Carbon::createFromFormat('H:i', $breakEnds[$key]),
             ]);
         }
 
@@ -175,7 +175,6 @@ class AdminController extends Controller
             ->with('breakTimes')
             ->get()
             ->keyBy(fn($a) => $a->date->format('Y-m-d'));
-
 
         return view('admin.attendance_staff', compact('targetMonth', 'monthOffset', 'dateLists', 'attendanceByDate', 'user'));
     }

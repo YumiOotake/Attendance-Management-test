@@ -142,8 +142,8 @@ class AttendanceDetailController extends Controller
                 ->firstOrFail();
         }
 
-        $clock_in = $request->requested_clock_in ? Carbon::createFromFormat('H:i', $request->requested_clock_in) : null;
-        $clock_out = $request->requested_clock_out ? Carbon::createFromFormat('H:i', $request->requested_clock_out) : null;
+        $clockIn = $request->requested_clock_in ? Carbon::createFromFormat('H:i', $request->requested_clock_in) : null;
+        $clockOut = $request->requested_clock_out ? Carbon::createFromFormat('H:i', $request->requested_clock_out) : null;
 
         $hasPendingRequest = AttendanceRequest::where('attendance_id', $attendance->id)
             ->where('user_id', $user->id)
@@ -158,25 +158,25 @@ class AttendanceDetailController extends Controller
         $attendanceRequest = AttendanceRequest::create([
             'attendance_id' => $attendance->id,
             'user_id' => $user->id,
-            'requested_clock_in' => $clock_in,
-            'requested_clock_out' => $clock_out,
+            'requested_clock_in' => $clockIn,
+            'requested_clock_out' => $clockOut,
             'note' => $request->note,
             'status' => 1,
         ]);
 
-        $break_starts = $request->requested_break_start;
-        $break_ends = $request->requested_break_end;
+        $breakStarts = $request->requested_break_start ?? [];
+        $breakEnds = $request->requested_break_end ?? [];
 
-        foreach ($break_starts as $key => $break_start) {
-            if (empty($break_start) && empty($break_ends[$key])) {
+        foreach ($breakStarts as $key => $breakStart) {
+            if (empty($breakStart) && empty($breakEnds[$key])) {
                 continue;
             }
-            $break_start = Carbon::createFromFormat('H:i', $break_start);
-            $break_end = Carbon::createFromFormat('H:i', $break_ends[$key]);
+            $breakStart = Carbon::createFromFormat('H:i', $breakStart);
+            $breakEnd = Carbon::createFromFormat('H:i', $breakEnds[$key]);
             RequestBreakTime::create([
                 'attendance_request_id' => $attendanceRequest->id,
-                'requested_break_start' => $break_start,
-                'requested_break_end' => $break_end,
+                'requested_break_start' => $breakStart,
+                'requested_break_end' => $breakEnd,
             ]);
         }
 
