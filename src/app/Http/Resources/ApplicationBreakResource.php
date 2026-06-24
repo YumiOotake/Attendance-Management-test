@@ -12,7 +12,7 @@ class ApplicationBreakResource extends JsonResource
      * @param  \Illuminate\Http\Request $request HTTPリクエスト
      * @return array 休憩申請データの配列
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,

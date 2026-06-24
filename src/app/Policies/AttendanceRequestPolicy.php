@@ -35,10 +35,11 @@ class AttendanceRequestPolicy
     }
 
     /**
-     * Determine whether the user can create models.
+     * 勤怠修正申請を作成できるか確認する
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param  User  $user 認証ユーザー
+     * @param  Attendance  $attendance 勤怠レコード
+     * @return bool
      */
     public function create(User $user, Attendance $attendance): bool
     {

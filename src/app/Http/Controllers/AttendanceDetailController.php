@@ -124,7 +124,7 @@ class AttendanceDetailController extends Controller
      * 勤怠修正の申請
      *
      * @param int $id 勤怠レコード
-     * @param Request $request リクエスト（修正時刻）
+     * @param AttendanceRequestStoreRequest $request リクエスト（修正時刻）
      * @return RedirectResponse
      */
     public function request(int $id, AttendanceRequestStoreRequest $request): RedirectResponse

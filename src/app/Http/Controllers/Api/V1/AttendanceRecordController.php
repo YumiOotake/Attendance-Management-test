@@ -50,8 +50,8 @@ class AttendanceRecordController extends Controller
     /**
      * 勤怠を新規登録する
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  StoreAttendanceRecordRequest $request
+     * @return \Illuminate\Http\JsonResponse 作成した勤怠データ（201）
      */
     public function store(StoreAttendanceRecordRequest $request): \Illuminate\Http\JsonResponse
     {
@@ -68,8 +68,8 @@ class AttendanceRecordController extends Controller
     /**
      * 勤怠詳細を取得する
      *
-     * @param  int Attendance $attendanceRecord
-     * @return AttendanceRecordResource
+     * @param Attendance $attendanceRecord 対象の勤怠レコード
+     * @return AttendanceRecordResource 勤怠詳細データ
      */
     public function show(Attendance $attendanceRecord): AttendanceRecordResource
     {
@@ -85,9 +85,9 @@ class AttendanceRecordController extends Controller
     /**
      * 勤怠を更新する
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int Attendance $attendanceRecord
-     * @return AttendanceRecordResource
+     * @param  UpdateAttendanceRecordRequest $request
+     * @param  Attendance $attendanceRecord  対象の勤怠レコード
+     * @return AttendanceRecordResource 更新後の勤怠データ
      */
     public function update(UpdateAttendanceRecordRequest $request, Attendance $attendanceRecord): AttendanceRecordResource
     {
@@ -103,8 +103,8 @@ class AttendanceRecordController extends Controller
     /**
      * 勤怠を削除する
      *
-     * @param  int  Attendance $attendanceRecord
-     * @return \Illuminate\Http\Response
+     * @param Attendance $attendanceRecord 対象の勤怠レコード
+     * @return \Illuminate\Http\Response 空のレスポンス（204）
      */
     public function destroy(Attendance $attendanceRecord): \Illuminate\Http\Response
     {

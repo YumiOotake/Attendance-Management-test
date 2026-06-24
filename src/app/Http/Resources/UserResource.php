@@ -9,8 +9,8 @@ class UserResource extends JsonResource
     /**
      * ユーザーデータを返す
      *
-     * @param  $request ユーザーレコード
-     * @return array
+     * @param  $request HTTPリクエスト
+     * @return array ユーザーデータの配列
      */
     public function toArray($request): array
     {

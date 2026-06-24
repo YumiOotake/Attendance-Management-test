@@ -81,7 +81,7 @@ class AdminController extends Controller
      * 勤怠を修正
      *
      * @param int $id 勤怠申請レコード
-     * @param Request $request リクエスト（勤怠修正）
+     * @param AttendanceRequestStoreRequest $request リクエスト（勤怠修正）
      * @return RedirectResponse
      */
     public function attendanceRequest(int $id, AttendanceRequestStoreRequest $request): RedirectResponse
