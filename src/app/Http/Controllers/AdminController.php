@@ -224,8 +224,8 @@ class AdminController extends Controller
                     $dateList->format('Y/m/d'),
                     $attendance->formatted_clock_in ?? '',
                     $attendance->formatted_clock_out ?? '',
-                    $attendance->total_break_time ?? '',
-                    $attendance->total_work_time ?? '',
+                    $attendance->formatted_total_break_time ?? '',
+                    $attendance->formatted_total_work_time ?? '',
                 ]);
             }
 
