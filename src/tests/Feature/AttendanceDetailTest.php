@@ -62,7 +62,6 @@ class AttendanceDetailTest extends TestCase
         });
     }
 
-
     //勤怠一覧--現在の月表示
     /** @test */
     public function test_attendance_list_displays_current_month(): void
@@ -134,7 +133,7 @@ class AttendanceDetailTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get(route('attendance.list', ['month' =>
-        + 1]));
+        +1]));
 
         $response->assertStatus(200);
         $response->assertViewHas('attendanceByDate', function ($attendanceByDate) use ($nextMonthDate, $currentMonthDate, $user) {
@@ -244,7 +243,7 @@ class AttendanceDetailTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewHas('attendance', function ($viewAttendance) use ($attendance) {
             return $viewAttendance->clock_in === $attendance->clock_in
-            && $viewAttendance->clock_out === $attendance->clock_out;
+                && $viewAttendance->clock_out === $attendance->clock_out;
         });
     }
 

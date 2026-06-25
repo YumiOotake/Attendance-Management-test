@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\User;
-use App\Models\AttendanceRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Database\Seeders\DatabaseSeeder;
 use Tests\TestCase;
@@ -128,7 +127,7 @@ class AdminAttendanceTest extends TestCase
 
         $response = $this->actingAs($adminUser)->get(route('admin.list', [
             'date' => -1,
-            ]));
+        ]));
 
         $response->assertStatus(200);
         $response->assertSee($baseDate->subDay()->format('Y/m/d'));

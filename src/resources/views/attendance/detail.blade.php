@@ -48,7 +48,8 @@
                 </dl>
                 <p class="request-form__message">*承認待ちのため修正はできません。</p>
             @else
-                <form action="{{ route('attendance.request', $attendance->id ?? 0) }}" method="POST" class="request-form" id="attendance-request-form">
+                <form action="{{ route('attendance.request', $attendance->id ?? 0) }}" method="POST" class="request-form"
+                    id="attendance-request-form">
                     @csrf
                     <input type="hidden" name="date" value="{{ request('date', $attendance->date) }}">
                     <div class="request-form__group">

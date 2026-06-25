@@ -28,9 +28,11 @@
                         <tr class="attendance__row">
                             <td class="attendance__item">{{ $attendanceRequest->status_label }}</td>
                             <td class="attendance__item">{{ $attendanceRequest->attendance->user->name }}</td>
-                            <td class="attendance__item attendance__item-date">{{ $attendanceRequest->attendance->date->format('Y/m/d') }}</td>
+                            <td class="attendance__item attendance__item-date">
+                                {{ $attendanceRequest->attendance->date->format('Y/m/d') }}</td>
                             <td class="attendance__item">{{ $attendanceRequest->note }}</td>
-                            <td class="attendance__item attendance__item-date">{{ $attendanceRequest->created_at->format('Y/m/d') }}</td>
+                            <td class="attendance__item attendance__item-date">
+                                {{ $attendanceRequest->created_at->format('Y/m/d') }}</td>
                             <td class="attendance__item">
                                 @if (auth()->user()->admin_status)
                                     <a href="{{ route('admin.request.approve.show', $attendanceRequest) }}"

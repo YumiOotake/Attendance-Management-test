@@ -182,4 +182,3 @@ class AuthenticationTest extends TestCase
         $response->assertSessionHasErrors(['email' => 'ログイン情報が登録されていません']);
     }
 }
-

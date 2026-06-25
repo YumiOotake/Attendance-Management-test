@@ -73,7 +73,6 @@ class FortifyServiceProvider extends ServiceProvider
             }
         });
 
-        //ログインした時、メール認証してなかったら認証画面へ
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {

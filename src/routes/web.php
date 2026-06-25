@@ -47,4 +47,3 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::patch('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestController::class, 'requestApprove'])->name('admin.request.approve');
     Route::get('/export', [AdminController::class, 'export'])->name('export');
 });
-

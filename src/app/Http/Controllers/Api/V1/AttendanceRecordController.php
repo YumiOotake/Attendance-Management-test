@@ -11,8 +11,16 @@ use Illuminate\Support\Carbon;
 use App\Models\Attendance;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
+
 class AttendanceRecordController extends Controller
 {
+    /**
+     * コンストラクタ
+     *
+     * store・update・destroyアクションにのみauth:sanctumミドルウェアを適用する
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth:sanctum')->only(['store', 'update', 'destroy']);
