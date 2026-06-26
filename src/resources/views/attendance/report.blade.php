@@ -65,7 +65,7 @@
                             {{ $anomalies['early_leave_count'] }}回</p>
                     </div>
                     <div class="attendance-report__card">
-                        <p class="attendance-report__label">長時間労働日数</p>
+                        <p class="attendance-report__label">長時間労働回数</p>
                         <p class="attendance-report__result attendance-report__count">
                             {{ $anomalies['long_work_count'] }}日</p>
                     </div>

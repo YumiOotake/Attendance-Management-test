@@ -130,7 +130,7 @@ class AdminAttendanceTest extends TestCase
         ]));
 
         $response->assertStatus(200);
-        $response->assertSee($baseDate->subDay()->format('Y/m/d'));
+        $response->assertSee($baseDate->copy()->subDay()->format('Y/m/d'));
         $response->assertSee('09:00');
         $response->assertSee('18:00');
         $response->assertDontSee('10:00');
@@ -143,7 +143,6 @@ class AdminAttendanceTest extends TestCase
     /** @test */
     public function test_admin_attendance_list_displays_next_day_when_next_clicked(): void
     {
-
         Carbon::setTestNow('2030-01-10 09:00:00');
 
         $adminUser = User::factory()->create(['admin_status' => true]);
@@ -172,7 +171,7 @@ class AdminAttendanceTest extends TestCase
         ]));
 
         $response->assertStatus(200);
-        $response->assertSee($baseDate->addDay()->format('Y/m/d'));
+        $response->assertSee($baseDate->copy()->addDay()->format('Y/m/d'));
         $response->assertSee('09:00');
         $response->assertSee('18:00');
         $response->assertDontSee('10:00');

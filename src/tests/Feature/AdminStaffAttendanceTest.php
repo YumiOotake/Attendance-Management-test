@@ -110,7 +110,7 @@ class AdminStaffAttendanceTest extends TestCase
         ]));
 
         $response->assertStatus(200);
-        $response->assertSee($baseDate->subMonthNoOverflow()->format('Y/m'));
+        $response->assertSee($baseDate->copy()->subMonthNoOverflow()->format('Y/m'));
         $response->assertSee('09:00');
         $response->assertSee('18:00');
         $response->assertDontSee('10:00');
@@ -154,7 +154,7 @@ class AdminStaffAttendanceTest extends TestCase
         ]));
 
         $response->assertStatus(200);
-        $response->assertSee($baseDate->addMonthNoOverflow()->format('Y/m'));
+        $response->assertSee($baseDate->copy()->addMonthNoOverflow()->format('Y/m'));
         $response->assertSee('09:00');
         $response->assertSee('18:00');
         $response->assertDontSee('10:00');

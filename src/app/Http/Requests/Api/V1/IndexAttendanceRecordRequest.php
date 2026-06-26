@@ -25,7 +25,7 @@ class IndexAttendanceRecordRequest extends FormRequest
     {
         return [
             'user_id' => 'nullable|integer',
-            'date' => 'nullable|date',
+            'date' => 'nullable|date_format:Y-m-d',
             'month' => 'nullable|string|date_format:Y-m',
             'page' => 'nullable|integer|min:1',
             'per_page' => 'nullable|integer|min:1|max:100',

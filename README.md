@@ -69,21 +69,22 @@ MAIL_FROM_NAME="${APP_NAME}"
 ### usersテーブル
 | カラム名 | 型 | primary key | unique key | not null | foreign key |
 | --- | --- | --- | --- | --- | --- |
-| id | bigint | ◯ |  | ◯ |  |
+| id | unsigned bigint | ◯ |  | ◯ |  |
 | name | varchar(255) |  |  | ◯ |  |
 | email | varchar(255) |  | ◯ | ◯ |  |
 | email_verified_at | timestamp |  |  |  |  |
 | password | varchar(255) |  |  | ◯ |  |
 | remember_token | varchar(100) |  |  |  |  |
+| admin_status | boolean |  |  | ◯ |  |
 | created_at | timestamp |  |  |  |  |
 | updated_at | timestamp |  |  |  |  |
 
 ### attendancesテーブル
 | カラム名 | 型 | primary key | unique key | not null | foreign key |
 | --- | --- | --- | --- | --- | --- |
-| id | bigint | ◯ |  | ◯ |  |
-| user_id | bigint |  |  | ◯ | users(id) |
-| date | date |  |  | ◯ |  |
+| id | unsigned bigint | ◯ |  | ◯ |  |
+| user_id | unsigned bigint |  | ◯(dateとの組み合わせ) | ◯ | users(id) |
+| date | date |  | ◯(user_idとの組み合わせ) | ◯ |  |
 | clock_in | time |  |  |  |  |
 | clock_out | time |  |  |  |  |
 | comment | varchar(255) |  |  |  |  |
@@ -93,8 +94,8 @@ MAIL_FROM_NAME="${APP_NAME}"
 ### break_timesテーブル
 | カラム名 | 型 | primary key | unique key | not null | foreign key |
 | --- | --- | --- | --- | --- | --- |
-| id | bigint | ◯ |  | ◯ |  |
-| attendance_id | bigint |  |  | ◯ | attendances(id) |
+| id | unsigned bigint | ◯ |  | ◯ |  |
+| attendance_id | unsigned bigint |  |  | ◯ | attendances(id) |
 | break_start | time |  |  |  |  |
 | break_end | time |  |  |  |  |
 | created_at | timestamp |  |  |  |  |
@@ -103,9 +104,9 @@ MAIL_FROM_NAME="${APP_NAME}"
 ### attendance_requestsテーブル
 | カラム名 | 型 | primary key | unique key | not null | foreign key |
 | --- | --- | --- | --- | --- | --- |
-| id | bigint | ◯ |  | ◯ |  |
-| attendance_id | bigint |  |  | ◯ | attendances(id) |
-| user_id | bigint |  |  | ◯ | users(id) |
+| id | unsigned bigint | ◯ |  | ◯ |  |
+| attendance_id | unsigned bigint |  |  | ◯ | attendances(id) |
+| user_id | unsigned bigint |  |  | ◯ | users(id) |
 | requested_clock_in | time |  |  |  |  |
 | requested_clock_out | time |  |  |  |  |
 | note | text |  |  | ◯ |  |
@@ -116,12 +117,15 @@ MAIL_FROM_NAME="${APP_NAME}"
 ### request_break_timesテーブル
 | カラム名 | 型 | primary key | unique key | not null | foreign key |
 | --- | --- | --- | --- | --- | --- |
-| id | bigint | ◯ |  | ◯ |  |
-| attendance_request_id | bigint |  |  | ◯ | attendance_requests(id) |
+| id | unsigned bigint | ◯ |  | ◯ |  |
+| attendance_request_id | unsigned bigint |  |  | ◯ | attendance_requests(id) |
 | requested_break_start | time |  |  |  |  |
 | requested_break_end | time |  |  |  |  |
 | created_at | timestamp |  |  |  |  |
 | updated_at | timestamp |  |  |  |  |
+
+Web画面の備考は修正申請用の attendance_requests.note として実装。
+attendance.comment は API 要件用の項目として分離しています。
 
 ## ER図
 
@@ -169,7 +173,7 @@ Body（raw / JSON）
 
 レスポンスの`token`をコピーしてください。
 
-### 2. 認証が必要なAPI（POST/PUT/DELETE）
+### 2. エンドポイント
 
 AuthタブでBearer Tokenを選択し、1で取得したトークンを貼り付けてください。
 

@@ -132,8 +132,9 @@ class AttendanceDetailTest extends TestCase
             'clock_out' => '19:00:00',
         ]);
 
-        $response = $this->actingAs($user)->get(route('attendance.list', ['month' =>
-        +1]));
+        $response = $this->actingAs($user)->get(route('attendance.list', [
+            'month' => +1
+        ]));
 
         $response->assertStatus(200);
         $response->assertViewHas('attendanceByDate', function ($attendanceByDate) use ($nextMonthDate, $currentMonthDate, $user) {
