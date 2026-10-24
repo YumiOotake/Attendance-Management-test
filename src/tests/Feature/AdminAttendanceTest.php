@@ -40,7 +40,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠一覧--情報取得
-    /** @test */
     public function test_admin_attendance_list_displays_all_users_attendances(): void
     {
         $data = $this->createDate();
@@ -86,7 +85,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠一覧--日付
-    /** @test */
     public function test_admin_attendance_list_displays_current_date(): void
     {
         $data = $this->createDate();
@@ -99,7 +97,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠一覧--前日ボタン
-    /** @test */
     public function test_admin_attendance_list_displays_previous_day_when_prev_clicked(): void
     {
         Carbon::setTestNow('2030-01-10 09:00:00');
@@ -140,7 +137,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠一覧--翌日ボタン
-    /** @test */
     public function test_admin_attendance_list_displays_next_day_when_next_clicked(): void
     {
         Carbon::setTestNow('2030-01-10 09:00:00');
@@ -181,7 +177,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠詳細--情報取得
-    /** @test */
     public function test_admin_attendance_detail_displays_selected_data(): void
     {
         $data = $this->createDate();
@@ -228,7 +223,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠修正--出勤時刻バリデーション
-    /** @test */
     public function test_admin_error_message_displays_when_clock_in_is_after_clock_out(): void
     {
         $data = $this->createDate();
@@ -253,7 +247,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠修正--休憩開始時刻バリデーション
-    /** @test */
     public function test_admin_error_message_displays_when_break_start_is_after_clock_out(): void
     {
         $data = $this->createDate();
@@ -281,7 +274,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠修正--休憩終了時刻バリデーション
-    /** @test */
     public function test_admin_error_message_displays_when_break_end_is_after_clock_out(): void
     {
         $data = $this->createDate();
@@ -309,7 +301,6 @@ class AdminAttendanceTest extends TestCase
     }
 
     //勤怠修正--備考バリデーション
-    /** @test */
     public function test_admin_error_message_displays_when_note_is_empty(): void
     {
         $data = $this->createDate();

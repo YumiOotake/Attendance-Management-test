@@ -19,7 +19,6 @@ class AttendanceApiTest extends TestCase
     }
 
     //公開API読み取り--一覧
-    /** @test */
     public function test_index_returns_attendance_list_as_json(): void
     {
         $response = $this->getJson('/api/v1/attendance-records');
@@ -49,7 +48,6 @@ class AttendanceApiTest extends TestCase
     }
 
     //公開API読み取り--詳細
-    /** @test */
     public function test_show_returns_attendance_detail_as_json(): void
     {
         $attendance = Attendance::first();
@@ -81,7 +79,6 @@ class AttendanceApiTest extends TestCase
     }
 
     //公開API読み取り--詳細404エラー
-    /** @test */
     public function test_show_returns_404_when_id_not_found(): void
     {
         $response = $this->getJson('/api/v1/attendance-records/' . 9999);
@@ -93,7 +90,6 @@ class AttendanceApiTest extends TestCase
     }
 
     //公開API書き込み--勤怠作成
-    /** @test */
     public function test_store_creates_new_attendance(): void
     {
         $user = User::factory()->create();
@@ -116,7 +112,6 @@ class AttendanceApiTest extends TestCase
     }
 
     //公開API書き込み--勤怠作成422エラー
-    /** @test */
     public function test_store_returns_422_with_japanese_error_on_validation_failure(): void
     {
         $user = User::factory()->create();
@@ -143,7 +138,6 @@ class AttendanceApiTest extends TestCase
     }
 
     //公開API書き込み--勤怠更新
-    /** @test */
     public function test_update_modifies_existing_attendance(): void
     {
         $user = User::factory()->create();
@@ -184,7 +178,6 @@ class AttendanceApiTest extends TestCase
     }
 
     //公開API書き込み--勤怠削除
-    /** @test */
     public function test_destroy_deletes_attendance(): void
     {
         $user = User::factory()->create();

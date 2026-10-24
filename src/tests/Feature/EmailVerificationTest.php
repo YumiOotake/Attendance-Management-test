@@ -21,7 +21,6 @@ class EmailVerificationTest extends TestCase
     }
 
     //メール認証--メール送信
-    /** @test */
     public function test_verification_email_is_sent_after_registration(): void
     {
         Notification::fake();
@@ -39,7 +38,6 @@ class EmailVerificationTest extends TestCase
     }
 
     //メール認証--認証はこちらからボタン
-    /** @test */
     public function test_resend_verification_link_navigates_to_verification_site(): void
     {
         $user = User::factory()->create(['email_verified_at' => null]);
@@ -51,7 +49,6 @@ class EmailVerificationTest extends TestCase
     }
 
     //メール認証--勤怠登録画面に遷移
-    /** @test */
     public function test_email_verification_completion_redirects_to_attendance_index(): void
     {
         $user = User::factory()->create(['email_verified_at' => null]);

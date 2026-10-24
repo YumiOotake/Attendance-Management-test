@@ -21,7 +21,6 @@ class AttendanceReportTest extends TestCase
     }
 
     //勤怠レポート--ゲストはアクセス不可
-    /** @test */
     public function test_guest_cannot_access_report_page(): void
     {
         $response = $this->get(route('attendance.report'));
@@ -30,7 +29,6 @@ class AttendanceReportTest extends TestCase
     }
 
     //勤怠レポート--計算
-    /** @test */
     public function test_authenticated_user_statistics_are_calculated_correctly(): void
     {
         $user = User::factory()->create();
@@ -96,7 +94,6 @@ class AttendanceReportTest extends TestCase
     }
 
     //勤怠レポート--勤怠なし
-    /** @test */
     public function test_report_handles_user_with_no_attendance_records_safely(): void
     {
         $user = User::factory()->create();

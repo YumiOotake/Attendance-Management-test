@@ -20,7 +20,6 @@ class SanctumAuthTest extends TestCase
     }
 
     //Sanctum認証--未認証401
-    /** @test */
     public function test_write_apis_return_401_when_unauthenticated(): void
     {
         $user = User::factory()->create();
@@ -59,7 +58,6 @@ class SanctumAuthTest extends TestCase
     }
 
     //Sanctum認証--更新、削除
-    /** @test */
     public function test_authenticated_user_can_update_and_delete_own_attendance(): void
     {
         $user = User::factory()->create();
@@ -95,7 +93,6 @@ class SanctumAuthTest extends TestCase
     }
 
     //Sanctum認証--403
-    /** @test */
     public function test_user_cannot_update_and_delete_others_attendance(): void
     {
         $user = User::factory()->create();

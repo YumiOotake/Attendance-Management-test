@@ -20,7 +20,6 @@ class AttendanceTest extends TestCase
     }
 
     //出勤機能--出勤ボタン
-    /** @test */
     public function test_clock_in(): void
     {
         $user = User::find(2);
@@ -43,7 +42,6 @@ class AttendanceTest extends TestCase
     }
 
     //出勤機能--1日1回
-    /** @test */
     public function test_clock_in_once_daily(): void
     {
         $user = User::find(2);
@@ -60,7 +58,6 @@ class AttendanceTest extends TestCase
     }
 
     //出勤機能--勤怠一覧で確認
-    /** @test */
     public function test_attendance_list_displays_clock_in_time(): void
     {
         Carbon::setTestNow('2030-01-10 09:00:00');
@@ -83,7 +80,6 @@ class AttendanceTest extends TestCase
     }
 
     //休憩機能--休憩入ボタン
-    /** @test */
     public function test_break_start(): void
     {
         $user = User::find(2);
@@ -106,7 +102,6 @@ class AttendanceTest extends TestCase
     }
 
     //休憩機能--休憩入は1日何回も休憩
-    /** @test */
     public function test_break_start_multiple_times(): void
     {
         $user = User::find(2);
@@ -126,7 +121,6 @@ class AttendanceTest extends TestCase
     }
 
     //休憩機能--休憩戻ボタン
-    /** @test */
     public function test_break_end(): void
     {
         $user = User::find(2);
@@ -148,7 +142,6 @@ class AttendanceTest extends TestCase
     }
 
     //休憩機能--休憩戻は1日何回も休憩
-    /** @test */
     public function test_break_end_multiple_times(): void
     {
         $user = User::find(2);
@@ -169,7 +162,6 @@ class AttendanceTest extends TestCase
     }
 
     //休憩機能--勤怠一覧で確認
-    /** @test */
     public function test_attendance_list_displays_break_time(): void
     {
         Carbon::setTestNow('2030-01-10 12:00:00');
@@ -194,7 +186,6 @@ class AttendanceTest extends TestCase
     }
 
     //退勤機能--退勤ボタン
-    /** @test */
     public function test_clock_out(): void
     {
         $user = User::find(2);
@@ -221,7 +212,6 @@ class AttendanceTest extends TestCase
     }
 
     //退勤機能--勤怠一覧で確認
-    /** @test */
     public function test_attendance_list_displays_clock_out_time(): void
     {
         Carbon::setTestNow('2030-01-10 09:00:00');

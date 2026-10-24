@@ -23,7 +23,7 @@ class AttendanceDetailController extends Controller
     public function list(Request $request): View
     {
         $user = auth()->user();
-        $monthOffset = $request->query('month', 0);
+        $monthOffset = (int) $request->query('month', 0);
 
         $targetMonth = Carbon::now()->addMonthNoOverflow($monthOffset);
 

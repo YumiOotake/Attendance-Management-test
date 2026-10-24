@@ -94,7 +94,6 @@ class AdminRequestApprovalTest extends TestCase
     }
 
     //勤怠修正--承認待ち
-    /** @test */
     public function test_admin_pending_requests_displays_all_pending_requests(): void
     {
         $data = $this->createDate();
@@ -113,7 +112,6 @@ class AdminRequestApprovalTest extends TestCase
     }
 
     //勤怠修正--承認済み
-    /** @test */
     public function test_approved_requests_displays_all_approved_requests(): void
     {
         $data = $this->createDate();
@@ -134,7 +132,6 @@ class AdminRequestApprovalTest extends TestCase
     }
 
     //勤怠修正--詳細表示
-    /** @test */
     public function test_admin_request_detail_displays_correct_data(): void
     {
         $adminUser = User::factory()->create([
@@ -169,7 +166,6 @@ class AdminRequestApprovalTest extends TestCase
     }
 
     //勤怠修正--修正
-    /** @test */
     public function test_admin_request_approval_updates_attendance_correctly(): void
     {
         $adminUser = User::factory()->create([

@@ -21,7 +21,6 @@ class AttendanceStatusTest extends TestCase
     }
 
     //日時取得
-    /** @test */
     public function test_get_date(): void
     {
         $user = User::find(2);
@@ -38,7 +37,6 @@ class AttendanceStatusTest extends TestCase
     }
 
     //勤怠ステータス--勤務外
-    /** @test */
     public function test_get_status_none(): void
     {
         $user = User::find(2);
@@ -57,7 +55,6 @@ class AttendanceStatusTest extends TestCase
     }
 
     //勤怠ステータス--出勤中
-    /** @test */
     public function test_get_status_working(): void
     {
         $user = User::find(2);
@@ -76,7 +73,6 @@ class AttendanceStatusTest extends TestCase
     }
 
     //勤怠ステータス--休憩中
-    /** @test */
     public function test_get_status_break(): void
     {
         $user = User::find(2);
@@ -100,7 +96,6 @@ class AttendanceStatusTest extends TestCase
     }
 
     //勤怠ステータス--退勤済
-    /** @test */
     public function test_get_status_done(): void
     {
         $user = User::find(2);

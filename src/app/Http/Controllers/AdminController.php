@@ -128,7 +128,7 @@ class AdminController extends Controller
      */
     public function attendanceList(Request $request): View
     {
-        $dateOffset = $request->query('date', 0);
+        $dateOffset = (int) $request->query('date', 0);
         $targetDate = Carbon::now()->addDays($dateOffset);
 
         $attendances = Attendance::whereDate('date', $targetDate->format('Y-m-d'))
@@ -161,7 +161,7 @@ class AdminController extends Controller
     public function staffAttendanceList(int $id, Request $request): View
     {
         $user = User::where('id', $id)->firstOrFail();
-        $monthOffset = $request->query('month', 0);
+        $monthOffset = (int) $request->query('month', 0);
 
         $targetMonth = Carbon::now()->addMonthsNoOverflow($monthOffset);
 
@@ -188,7 +188,7 @@ class AdminController extends Controller
     public function export(Request $request): StreamedResponse
     {
         $user = User::where('id', $request->query('id'))->firstOrFail();
-        $monthOffset = $request->query('month', 0);
+        $monthOffset = (int) $request->query('month', 0);
 
         $targetMonth = Carbon::now()->addMonthsNoOverflow($monthOffset);
 

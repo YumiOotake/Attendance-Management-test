@@ -17,7 +17,6 @@ class AuthenticationTest extends TestCase
     }
 
     //会員情報登録--名前バリデーション
-    /** @test */
     public function test_register_user_validate_name(): void
     {
         $response = $this->post(route('register'), [
@@ -31,7 +30,6 @@ class AuthenticationTest extends TestCase
     }
 
     //会員情報登録--メアドバリデーション
-    /** @test */
     public function test_register_user_validate_email(): void
     {
         $response = $this->post(route('register'), [
@@ -45,7 +43,6 @@ class AuthenticationTest extends TestCase
     }
 
     //会員情報登録--パスワード8文字未満
-    /** @test */
     public function test_register_user_validate_password_under8(): void
     {
         $response = $this->post(route('register'), [
@@ -59,7 +56,6 @@ class AuthenticationTest extends TestCase
     }
 
     //会員情報登録--パスワード不一致
-    /** @test */
     public function test_register_user_validate_confirm_password(): void
     {
         $response = $this->post(route('register'), [
@@ -73,7 +69,6 @@ class AuthenticationTest extends TestCase
     }
 
     //会員情報登録--パスワードバリデーション
-    /** @test */
     public function test_register_user_validate_password(): void
     {
         $response = $this->post(route('register'), [
@@ -87,7 +82,6 @@ class AuthenticationTest extends TestCase
     }
 
     //会員情報登録
-    /** @test */
     public function test_register_user(): void
     {
         $response = $this->post(route('register'), [
@@ -105,7 +99,6 @@ class AuthenticationTest extends TestCase
     }
 
     //ログイン--メアドバリデーション
-    /** @test */
     public function test_login_user_validate_email(): void
     {
         $response = $this->post(route('login.store'), [
@@ -118,7 +111,6 @@ class AuthenticationTest extends TestCase
     }
 
     //ログイン--パスワードバリデーション
-    /** @test */
     public function test_login_user_validate_password(): void
     {
         $response = $this->post(route('login.store'), [
@@ -131,7 +123,6 @@ class AuthenticationTest extends TestCase
     }
 
     //ログイン--不一致
-    /** @test */
     public function test_login_user_with_invalid_credentials(): void
     {
         $response = $this->post(route('login.store'), [
@@ -144,7 +135,6 @@ class AuthenticationTest extends TestCase
     }
 
     //管理者ログイン--メアドバリデーション
-    /** @test */
     public function test_login_admin_user_validate_email(): void
     {
         $response = $this->post(route('login.store'), [
@@ -157,7 +147,6 @@ class AuthenticationTest extends TestCase
     }
 
     //管理者ログイン--パスワードバリデーション
-    /** @test */
     public function test_login_admin_user_validate_password(): void
     {
         $response = $this->post(route('login.store'), [
@@ -170,7 +159,6 @@ class AuthenticationTest extends TestCase
     }
 
     //ログイン--不一致
-    /** @test */
     public function test_login_admin_with_invalid_credentials(): void
     {
         $response = $this->post(route('login.store'), [

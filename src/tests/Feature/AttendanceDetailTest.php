@@ -21,7 +21,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠一覧--自分の勤怠が全て表示
-    /** @test */
     public function test_attendance_list_displays_all_user_attendances(): void
     {
         $user = User::factory()->create();
@@ -63,7 +62,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠一覧--現在の月表示
-    /** @test */
     public function test_attendance_list_displays_current_month(): void
     {
         $user = User::factory()->create();
@@ -77,7 +75,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠一覧--前月ボタン
-    /** @test */
     public function test_attendance_list_displays_previous_month_when_prev_clicked(): void
     {
         $user = User::factory()->create();
@@ -110,7 +107,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠一覧--翌月ボタン
-    /** @test */
     public function test_attendance_list_displays_next_month_when_next_clicked(): void
     {
         $user = User::factory()->create();
@@ -145,7 +141,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠一覧--詳細ボタン
-    /** @test */
     public function test_detail_button_navigates_to_attendance_detail_page(): void
     {
         $user = User::factory()->create();
@@ -176,7 +171,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠詳細--名前表示
-    /** @test */
     public function test_attendance_detail_displays_login_user_name(): void
     {
         $user = User::factory()->create();
@@ -200,7 +194,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠詳細--日付表示
-    /** @test */
     public function test_attendance_detail_displays_selected_date(): void
     {
         $user = User::factory()->create();
@@ -224,7 +217,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠詳細--出勤退勤時刻
-    /** @test */
     public function test_attendance_detail_displays_correct_clock_times(): void
     {
         $user = User::factory()->create();
@@ -249,7 +241,6 @@ class AttendanceDetailTest extends TestCase
     }
 
     //勤怠詳細--休憩時刻
-    /** @test */
     public function test_attendance_detail_displays_correct_break_times(): void
     {
         $user = User::factory()->create();

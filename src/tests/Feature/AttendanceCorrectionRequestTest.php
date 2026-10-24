@@ -36,7 +36,6 @@ class AttendanceCorrectionRequestTest extends TestCase
     }
 
     //勤怠修正--出勤時刻バリデーション
-    /** @test */
     public function test_error_message_displays_when_clock_in_is_after_clock_out(): void
     {
         [$user, $attendance] = $this->createDate();
@@ -59,7 +58,6 @@ class AttendanceCorrectionRequestTest extends TestCase
     }
 
     //勤怠修正--休憩開始時刻バリデーション
-    /** @test */
     public function test_error_message_displays_when_break_start_is_after_clock_out(): void
     {
         [$user, $attendance] = $this->createDate();
@@ -91,7 +89,6 @@ class AttendanceCorrectionRequestTest extends TestCase
     }
 
     //勤怠修正--休憩終了時刻バリデーション
-    /** @test */
     public function test_error_message_displays_when_break_end_is_after_clock_out(): void
     {
         [$user, $attendance] = $this->createDate();
@@ -123,7 +120,6 @@ class AttendanceCorrectionRequestTest extends TestCase
     }
 
     //勤怠修正--備考バリデーション
-    /** @test */
     public function test_error_message_displays_when_note_is_empty(): void
     {
         [$user, $attendance] = $this->createDate();
@@ -147,7 +143,6 @@ class AttendanceCorrectionRequestTest extends TestCase
     }
 
     //勤怠修正--申請
-    /** @test */
     public function test_attendance_request_is_created_successfully(): void
     {
         [$user, $attendance] = $this->createDate();
@@ -197,7 +192,6 @@ class AttendanceCorrectionRequestTest extends TestCase
     }
 
     //勤怠修正--承認待ち
-    /** @test */
     public function test_pending_requests_displays_all_user_requests(): void
     {
         [$user, $attendance] = $this->createDate();
@@ -241,7 +235,6 @@ class AttendanceCorrectionRequestTest extends TestCase
     }
 
     //勤怠修正--承認済み
-    /** @test */
     public function test_approved_requests_displays_all_approved_requests(): void
     {
         [$user, $attendance] = $this->createDate();
@@ -300,7 +293,6 @@ class AttendanceCorrectionRequestTest extends TestCase
     }
 
     //勤怠修正--詳細
-    /** @test */
     public function test_request_detail_link_navigates_to_attendance_detail(): void
     {
         [$user, $attendance] = $this->createDate();

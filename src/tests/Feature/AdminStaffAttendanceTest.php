@@ -21,7 +21,6 @@ class AdminStaffAttendanceTest extends TestCase
     }
 
     //ユーザー情報--取得
-    /** @test */
     public function test_admin_staff_list_displays_all_users_name_and_email(): void
     {
         $adminUser = User::factory()->create([
@@ -41,7 +40,6 @@ class AdminStaffAttendanceTest extends TestCase
     }
 
     //ユーザー情報--勤怠
-    /** @test */
     public function test_admin_staff_attendance_list_displays_correct_data(): void
     {
         $adminUser = User::factory()->create([
@@ -76,7 +74,6 @@ class AdminStaffAttendanceTest extends TestCase
     }
 
     //ユーザー情報--前月ボタン
-    /** @test */
     public function test_admin_staff_attendance_list_displays_previous_month_when_prev_clicked(): void
     {
         Carbon::setTestNow('2030-01-10 09:00:00');
@@ -120,7 +117,6 @@ class AdminStaffAttendanceTest extends TestCase
     }
 
     //ユーザー情報--翌月ボタン
-    /** @test */
     public function test_admin_staff_attendance_list_displays_next_month_when_next_clicked(): void
     {
         Carbon::setTestNow('2030-01-10 09:00:00');
@@ -164,7 +160,6 @@ class AdminStaffAttendanceTest extends TestCase
     }
 
     //ユーザー情報--詳細ボタン
-    /** @test */
     public function test_admin_staff_attendance_list_detail_link_navigates_to_detail(): void
     {
         $adminUser = User::factory()->create([

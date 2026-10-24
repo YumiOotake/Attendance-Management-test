@@ -64,8 +64,7 @@ class Attendance extends Model
 
         foreach ($this->breakTimes as $break) {
             if ($break->break_start && $break->break_end) {
-                $totalMinutes += Carbon::parse($break->break_end)
-                    ->diffInMinutes(Carbon::parse($break->break_start));
+                $totalMinutes += self::minutesBetween($break->break_start, $break->break_end);
             }
         }
         $hours = intdiv($totalMinutes, 60);
@@ -81,13 +80,11 @@ class Attendance extends Model
 
         foreach ($this->breakTimes as $break) {
             if ($break->break_start && $break->break_end) {
-                $totalBreakMinutes += Carbon::parse($break->break_end)
-                    ->diffInMinutes(Carbon::parse($break->break_start));
+                $totalBreakMinutes += self::minutesBetween($break->break_start, $break->break_end);
             }
         }
         if ($this->clock_in && $this->clock_out) {
-            $totalMinutes += Carbon::parse($this->clock_in)
-                ->diffInMinutes(Carbon::parse($this->clock_out));
+            $totalMinutes += self::minutesBetween($this->clock_in, $this->clock_out);
         }
 
         $totalWorkMinutes = $totalMinutes - $totalBreakMinutes;
@@ -105,13 +102,11 @@ class Attendance extends Model
 
         foreach ($this->breakTimes as $break) {
             if ($break->break_start && $break->break_end) {
-                $totalBreakMinutes += Carbon::parse($break->break_end)
-                    ->diffInMinutes(Carbon::parse($break->break_start));
+                $totalBreakMinutes += self::minutesBetween($break->break_start, $break->break_end);
             }
         }
         if ($this->clock_in && $this->clock_out) {
-            $totalMinutes += Carbon::parse($this->clock_in)
-                ->diffInMinutes(Carbon::parse($this->clock_out));
+            $totalMinutes += self::minutesBetween($this->clock_in, $this->clock_out);
         }
 
         $totalWorkMinutes = $totalMinutes - $totalBreakMinutes;
@@ -125,8 +120,7 @@ class Attendance extends Model
 
         foreach ($this->breakTimes as $break) {
             if ($break->break_start && $break->break_end) {
-                $totalMinutes += Carbon::parse($break->break_end)
-                    ->diffInMinutes(Carbon::parse($break->break_start));
+                $totalMinutes += self::minutesBetween($break->break_start, $break->break_end);
             }
         }
         $hours = intdiv($totalMinutes, 60);
@@ -142,13 +136,11 @@ class Attendance extends Model
 
         foreach ($this->breakTimes as $break) {
             if ($break->break_start && $break->break_end) {
-                $totalBreakMinutes += Carbon::parse($break->break_end)
-                    ->diffInMinutes(Carbon::parse($break->break_start));
+                $totalBreakMinutes += self::minutesBetween($break->break_start, $break->break_end);
             }
         }
         if ($this->clock_in && $this->clock_out) {
-            $totalMinutes += Carbon::parse($this->clock_in)
-                ->diffInMinutes(Carbon::parse($this->clock_out));
+            $totalMinutes += self::minutesBetween($this->clock_in, $this->clock_out);
         }
 
         $totalWorkMinutes = $totalMinutes - $totalBreakMinutes;
@@ -157,5 +149,13 @@ class Attendance extends Model
         $minutes = $totalWorkMinutes % 60;
 
         return sprintf('%02d:%02d', $hours, $minutes);
+    }
+
+    /**
+     * Carbon 3 の diffInMinutes は符号付き・float を返すため、整数の絶対値に揃える
+     */
+    private static function minutesBetween(string $from, string $to): int
+    {
+        return (int) abs(Carbon::parse($from)->diffInMinutes(Carbon::parse($to)));
     }
 }
